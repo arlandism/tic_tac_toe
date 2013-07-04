@@ -4,13 +4,6 @@ from no_prompt_interface import NoPromptInterface
 
 class HumanVsHumanScenario(object):
 
-    token_flag = False
-    difficulty_flag = False
-    order_flag = False
-
-    def __init__(self):
-	self.interface = NoPromptInterface()
-
     def setup(self):
 	player_one = HumanPlayer("x")
 	player_two = HumanPlayer("o")
