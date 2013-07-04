@@ -1,4 +1,3 @@
-from no_prompt_interface import NoPromptInterface
 from game import Game
 from easy_ai import EasyAI
 from ai import ImpossibleAI
