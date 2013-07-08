@@ -17,4 +17,5 @@ class AiVsAiScenario(object):
     def prompts():
 	difficulty_prompt = {"What difficulty would you like the first ai to be (easy,impossible): ":
 			     ("easy","impossible")}
+	# Passes prompts to OrderedDict creator
 	return NoPromptInterface.prompts(difficulty_prompt)

@@ -42,7 +42,7 @@ class UserInterfaceGameSetupTests(unittest.TestCase):
 
 class UserInterfaceShowFlaggedPromptsTests(unittest.TestCase):
 
-    def test_that_only_flagged_prompts_are_shown(self):
+    def test_that_appropriate_prompts_shown(self):
         mock = MockUserInput([3,"easy"])
 	fake_printer = FakePrinter()
 	ui = UserInterface(mock,fake_printer)
