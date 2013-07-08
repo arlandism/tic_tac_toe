@@ -32,7 +32,6 @@ class PrompterTests(unittest.TestCase):
 	appropriate_responses = ["doberman","husky","rottweiler"]
 	self.prompter.input_object=ui
 	self.prompter.prompt_and_collect_input({"Name a dog breed": appropriate_responses})
-	self.assertTrue("cheshire" not in self.prompter.return_answers())
 	self.assertTrue("rottweiler" in self.prompter.return_answers())
    
     def test_prompter_returns_prompt_to_answer_hash(self):

@@ -1,15 +1,17 @@
 from ai import ImpossibleAI
 from game import Game
 from no_prompt_interface import NoPromptInterface
+from easy_vs_impossible_ai import EasyVsImpossibleAiScenario
 
 class AiVsAiScenario(object):
 
-    def setup(self):
-        return NoPromptInterface().setup(ImpossibleAI)
+    def __init__(self,user_data):
+	self.difficulty = user_data.get("What difficulty would you like the first ai to be (easy,impossible): ")
 
-    @staticmethod
-    def flags():
-        return NoPromptInterface.flags()
+    def setup(self):
+	if self.difficulty == "easy":
+            return EasyVsImpossibleAiScenario().setup()
+        return NoPromptInterface().setup(ImpossibleAI)
 
     @staticmethod
     def prompts():

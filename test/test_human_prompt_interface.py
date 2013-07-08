@@ -3,12 +3,6 @@ from human_prompt_interface import HumanPromptInterface
 
 class HumanPromptInterfaceFlagsTests(unittest.TestCase):
 
-    def test_that_it_returns_appropriate_flags(self):
-	flags = HumanPromptInterface.prompt_flags()
-	self.assertTrue("token_flag" in flags)
-	self.assertTrue("difficulty_flag" in flags)
-	self.assertTrue("order_flag" in flags)
-
     def test_that_it_returns_supplied_prompts_and_responses(self):
 	another_prompt = {"Supply a letter": ("a","b","c")}
         prompts = HumanPromptInterface.prompts(another_prompt)
