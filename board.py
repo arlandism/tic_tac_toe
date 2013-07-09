@@ -31,12 +31,9 @@ class Board(BaseBoard):
         return bool(self.winner()) or self.is_full()
 
     def winner(self):
-        for combo in self.WINNING_COMBOS:
+        for combo in self.winners():
             if self.__pieces_match__(combo):
                     return self.board_state[combo[0]]
-
-    def generate_winners(self):
-        pass
 
     def is_full(self):
         occupied_spaces = self.board_state.keys()

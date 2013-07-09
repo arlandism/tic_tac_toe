@@ -18,3 +18,22 @@ class BaseBoardTests(unittest.TestCase):
     def test_diagonals(self):
         self.assertEqual([[1,5,9],[3,5,7]],BaseBoard(base=3).diagonals())
         self.assertEqual([[1,4],[2,3]],BaseBoard(base=2).diagonals())
+
+    def test_winners(self):
+        rows = [[1,2,3],
+                [4,5,6],
+               [7,8,9]]
+        columns = [[1,4,7],
+                   [2,5,8],
+                  [3,6,9]]
+        diagonals = [[1,5,9],
+                    [3,5,7]]
+        winners = rows + columns + diagonals
+        self.assertEqual(winners.sort(),BaseBoard(base=3).winners().sort())
+        
+        winners = [[1,2],[3,4],
+                   [1,4],[2,3],
+                   [1,3],[2,4]]
+        self.assertEqual(winners.sort(),BaseBoard(base=2).winners().sort())
+
+

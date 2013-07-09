@@ -43,6 +43,8 @@ class BaseBoard(object):
         diagonal_list.append(second_diagonal)
         return diagonal_list
 
+    def winners(self):
+        return self.rows() + self.columns() + self.diagonals() 
 
     def state(self):
         return self.board_state
