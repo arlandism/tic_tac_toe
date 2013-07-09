@@ -1,3 +1,4 @@
+from win_generator import WinGenerator
 
 class BaseBoard(object):
 
@@ -10,44 +11,31 @@ class BaseBoard(object):
     def make_move(self,space,token):
         self.board_state[space] = token
 
-    def rows(self):
-        row_list = []
-        index_one = 0
-        for i in range(self.board_index):
-            row_list.append(self.keys[index_one:index_one+self.board_index])
-            index_one += self.board_index
-        return row_list
-
-    def columns(self):
-        column_list = []
-        for i in range(self.board_index):
-            column = []
-            for j in range(self.board_index):
-                column.append(self.keys[i])
-                i += self.board_index
-            column_list.append(column)
-        return column_list
-
-    def diagonals(self):
-        diagonal_list = []
-        diagonal = []
-        second_diagonal = []
-        board_key = 1
-        alt_board_key = board_key + self.board_index - 1
-        for i in range(self.board_index):
-            diagonal.append(board_key)
-            board_key += self.board_index + 1
-            second_diagonal.append(alt_board_key)
-            alt_board_key += self.board_index - 1
-        diagonal_list.append(diagonal)
-        diagonal_list.append(second_diagonal)
-        return diagonal_list
-
     def winners(self):
-        return self.rows() + self.columns() + self.diagonals() 
+        print WinGenerator(self.board_index)
+        return WinGenerator(self.board_index).winners()
 
+    def winner(self):
+        for combo in self.winners():
+            if self.moves_have_been_made(combo):
+                if self.pieces_match(combo):
+                    return self.winning_token(combo) 
+
+    def pieces_match(self,combo):
+        tokens = [self.board_state[space] for space in range(1,len(combo))]
+        return tokens == tokens[::-1]
+
+    def moves_have_been_made(self,combo):
+        return set(combo).issubset(set(self.state().keys()))
+
+    def winning_token(self,combo):
+        return self.board_state[combo[0]]
+    
     def is_full(self):
         return self.state().keys() == self.keys
+
+    def over(self):
+        return self.is_full() 
 
     def available_moves(self):
         moves_taken = self.state().keys()
@@ -58,3 +46,4 @@ class BaseBoard(object):
 
     def state(self):
         return self.board_state
+

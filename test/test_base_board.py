@@ -8,33 +8,14 @@ class BaseBoardTests(unittest.TestCase):
         board.make_move(1,"x")
         self.assertEqual({1:"x"},board.state())
 
-    def test_rows(self):
-        self.assertEqual([[1,2,3],[4,5,6],[7,8,9]],BaseBoard(base=3).rows())
+    def test_winner(self):
+        board = BaseBoard(base=3)
+        board.board_state = {1:"me",2:"me",3:"me"}
+        self.assertEqual("me",board.winner())
 
-    def test_columns(self):
-        self.assertEqual([[1,3],[2,4]],BaseBoard(base=2).columns())
-        self.assertEqual([[1,4,7],[2,5,8],[3,6,9]],BaseBoard(base=3).columns())
-
-    def test_diagonals(self):
-        self.assertEqual([[1,5,9],[3,5,7]],BaseBoard(base=3).diagonals())
-        self.assertEqual([[1,4],[2,3]],BaseBoard(base=2).diagonals())
-
-    def test_winners(self):
-        rows = [[1,2,3],
-                [4,5,6],
-               [7,8,9]]
-        columns = [[1,4,7],
-                   [2,5,8],
-                  [3,6,9]]
-        diagonals = [[1,5,9],
-                    [3,5,7]]
-        winners = rows + columns + diagonals
-        self.assertEqual(winners.sort(),BaseBoard(base=3).winners().sort())
-        
-        winners = [[1,2],[3,4],
-                   [1,4],[2,3],
-                   [1,3],[2,4]]
-        self.assertEqual(winners.sort(),BaseBoard(base=2).winners().sort())
+        new_board = BaseBoard(base=2)
+        new_board.board_state = {1:"you",4:"you"}
+        self.assertEqual("you",new_board.winner())
 
     def test_full(self):
         board = BaseBoard(base=3)
@@ -56,3 +37,10 @@ class BaseBoardTests(unittest.TestCase):
         board.make_move(3,"x")
         board.erase_move(3)
         self.assertEqual({},board.state())
+
+    def test_over(self):
+        self.assertFalse(BaseBoard(base=3).over())
+        board = BaseBoard(base=3)
+        board.board_state = {1:"x",2:"x",3:"x"}
+      #  self.assertTrue(board.over())
+       
