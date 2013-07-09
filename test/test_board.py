@@ -19,6 +19,11 @@ class Board__Str__Tests(unittest.TestCase):
         board.make_move(1,'x')
         self.assertEqual(1,board.__str__().count('x'))
 
+class BoardRowTests(unittest.TestCase):
+        
+    def test_rows(self):
+        self.assertEqual([[1,2,3],[4,5,6],[7,8,9]],Board().rows())
+
 class BoardStateTests(unittest.TestCase):
 
     def test_if_state_returns_empty_dict_with_no_moves(self):

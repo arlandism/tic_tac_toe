@@ -23,11 +23,7 @@ class FourByFourBoardTests(unittest.TestCase):
 
     def test_board_not_over_when_empty(self):
         self.assertFalse(self.board.over())
-
-
-
-	
-        
+ 
  
     
 

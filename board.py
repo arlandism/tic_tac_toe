@@ -8,6 +8,7 @@ class Board(BaseBoard):
 
     def __init__(self):
         self.board_state = dict()
+        self.board_index = 3
 
     def __str__(self):
         board_template = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +
@@ -32,6 +33,9 @@ class Board(BaseBoard):
         for combo in self.WINNING_COMBOS:
             if self.__pieces_match__(combo):
                     return self.board_state[combo[0]]
+
+    def generate_winners(self):
+        pass
 
     def is_full(self):
         occupied_spaces = self.board_state.keys()
