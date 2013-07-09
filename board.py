@@ -1,4 +1,6 @@
-class Board(object):
+from base_board import BaseBoard
+
+class Board(BaseBoard):
 
     WINNING_COMBOS = [[1,2,3],[4,5,6],[7,8,9],
                       [1,4,7],[2,5,8],[3,6,9],
@@ -13,9 +15,6 @@ class Board(object):
                           "\n%(7)3s|%(8)3s|%(9)3s")
         return board_template % self.generate_layout()
 
-    def state(self):
-        return self.board_state
-
     def generate_layout(self):
         keys_present = self.board_state.keys()
         keys_not_present = self.available_moves()
@@ -25,10 +24,6 @@ class Board(object):
         for key in keys_not_present:
              layout[str(key)] = ""
         return layout
-
-    def make_move(self, space, token):
-        if space in self.available_moves():
-            self.board_state[space] = token
 
     def over(self):
         return bool(self.winner()) or self.is_full()

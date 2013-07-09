@@ -1,4 +1,3 @@
-from playerinput import InputValidator
 from printer import Printer
 from scenario_selector import ScenarioSelector
 from ai_vs_ai import AiVsAiScenario
@@ -12,7 +11,6 @@ class UserInterface(object):
     def __init__(self,user_input,display_object=Printer()):
         self.user_input = user_input
 	self.display_object = display_object
-        self.display_method = display_object.display
 	self.scenario_mapping = {1:HumanVsAiScenario,2:HumanVsHumanScenario, 
 			         3:AiVsAiScenario, 4:HumanoidVsAiScenario}
 	self.scenario_prompt = ("Please choose a scenario: \n" +
@@ -24,11 +22,17 @@ class UserInterface(object):
 
 
     def game_setup(self):
+
+	# Delegate this section to scenario selector
+	# Insert scenario selector into user interface's constructor
 	prompter = Prompter(self.display_object,self.user_input)
-	prompter.prompt_and_collect_input({self.scenario_prompt: self.scenario_choices})
+	prompter.prompt_and_collect_input({self.scenario_prompt: self.scenario_choices}) 
 	chosen_scenario_number = prompter.return_answer_hash()[self.scenario_prompt] 
 	chosen_scenario = self.scenario_mapping[chosen_scenario_number]
+
+        # Show prompts, get input, return that input
+	# What if we pushed this complexity down to scenarios
 	prompter.prompt_and_collect_input(chosen_scenario.prompts())
 	user_responses = prompter.return_answer_hash()
-	scenario = chosen_scenario(user_responses) 
-        return scenario.setup() 
+        # Return Game
+	return chosen_scenario(user_responses).setup() 

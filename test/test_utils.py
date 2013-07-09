@@ -1,8 +1,7 @@
-import random
-import sys
-sys.path.append("../")
 from player import HumanPlayer
 from board import Board
+from string import ascii_letters
+
 
 class MockUserInput(object):
 
@@ -37,3 +36,18 @@ class FakePrinter(object):
         except IndexError:
             print "history must be populated."
             return []
+
+    def history_string(self):
+	return str(self.history)
+
+class MockScenario(object):
+
+    def __init__(self):
+	pass
+
+    def setup(self):
+	return "glitch in the matrix."
+
+    @staticmethod
+    def prompts():
+	return {"any letter will do": ascii_letters}
