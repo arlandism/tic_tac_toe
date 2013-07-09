@@ -29,7 +29,19 @@ class BaseBoard(object):
         return column_list
 
     def diagonals(self):
-        return [[1,5,9],[3,5,7]]
+        diagonal_list = []
+        diagonal = []
+        second_diagonal = []
+        board_key = 1
+        alt_board_key = board_key + self.board_index - 1
+        for i in range(self.board_index):
+            diagonal.append(board_key)
+            board_key += self.board_index + 1
+            second_diagonal.append(alt_board_key)
+            alt_board_key += self.board_index - 1
+        diagonal_list.append(diagonal)
+        diagonal_list.append(second_diagonal)
+        return diagonal_list
 
 
     def state(self):
