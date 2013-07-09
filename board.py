@@ -9,6 +9,7 @@ class Board(BaseBoard):
     def __init__(self):
         self.board_state = dict()
         self.board_index = 3
+        self.keys = range(1,10)
 
     def __str__(self):
         board_template = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +
