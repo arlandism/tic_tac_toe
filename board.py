@@ -35,17 +35,6 @@ class Board(BaseBoard):
             if self.__pieces_match__(combo):
                     return self.board_state[combo[0]]
 
-    def is_full(self):
-        occupied_spaces = self.board_state.keys()
-        return occupied_spaces == range(1,10)
-
-    def available_moves(self):
-        spaces_taken = self.board_state.keys()
-        move_list = range(1,10)
-        available_moves = [move for move in move_list if move not in spaces_taken]
-        return available_moves
-
-
     def __pieces_match__(self,combo):
         occupied_spaces = self.board_state.keys()
         if combo[0] in occupied_spaces and combo[1] in occupied_spaces and combo[2] in occupied_spaces:
@@ -54,6 +43,3 @@ class Board(BaseBoard):
             third_piece = self.board_state[combo[2]]
             return first_piece == second_piece == third_piece
         return False
-
-    def erase_move(self,move):
-        del self.board_state[move]

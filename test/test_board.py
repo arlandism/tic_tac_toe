@@ -39,9 +39,9 @@ class BoardStateTests(unittest.TestCase):
 class BoardMakeMoveTests(unittest.TestCase):
 
     def test_if_make_move_alters_board_state(self):
-	board = Board()
-	board.make_move(1,"x")
-	self.assertEqual({1:"x"},board.state())
+	    board = Board()
+	    board.make_move(1,"x")
+	    self.assertEqual({1:"x"},board.state())
 
 class BoardGameOverTests(unittest.TestCase):
 
@@ -51,21 +51,21 @@ class BoardGameOverTests(unittest.TestCase):
 
     def test_if_game_over_returns_true_when_board_is_full(self):
         board = Board()
-	board.board_state = {1:"x",2:"x",3:"o",
+    	board.board_state = {1:"x",2:"x",3:"o",
 			     4:"o",5:"x",6:"x",
 			     7:"x",8:"o",9:"o"}
         self.assertEqual(True,board.over())
 
     def test_if_game_over_returns_true_when_there_is_winner(self):
         board = Board()
-	board.board_state = {1:"x",2:"x",3:"x"}
+     	board.board_state = {1:"x",2:"x",3:"x"}
         self.assertEqual(True,board.over())
 
     def test_if_game_over_returns_false_with_empty_square(self):
         board = Board()
-	board.board_state = {1:"x",2:"o",3:"x",
-			     4:"o",5:"x",7:"o",
-			     8:"x"}
+        board.board_state = {1:"x",2:"o",3:"x",
+			                 4:"o",5:"x",7:"o",
+			                 8:"x"}
         self.assertEqual(False,board.over())
 
 class BoardWinnerTests(unittest.TestCase):
@@ -80,28 +80,28 @@ class BoardWinnerTests(unittest.TestCase):
 
     def test_if_winner_returns_token_with_win(self):
         board = Board()
-	board.board_state = {1:"x",2:"x",3:"x"}
-	self.assertEqual("x",board.winner())
+        board.board_state = {1:"x",2:"x",3:"x"}
+        self.assertEqual("x",board.winner())
 
     def test_winner_with_other_combo(self):
         board = Board()
-	board.board_state = {1:"o",2:"o",3:"o"}
-	self.assertEqual("o",board.winner())
+        board.board_state = {1:"o",2:"o",3:"o"}
+        self.assertEqual("o",board.winner())
 
     def test_if_winner_returns_none_with_full_board_no_win(self):
         board = Board()
-	board.board_state = {1:"x",2:"o",3:"x",
-			     4:"o",5:"o",6:"x",
-			     7:"x",8:"x",9:"o"}
+     	board.board_state = {1:"x",2:"o",3:"x",
+	              		     4:"o",5:"o",6:"x",
+			                 7:"x",8:"x",9:"o"}
         self.assertEqual(None,board.winner())
 
     def test_that_winner_always_returns_token_or_none(self):
         board = Board()
-	board.board_state = {1:"x",2:"x",3:"x"}
+        board.board_state = {1:"x",2:"x",3:"x"}
         self.assertEqual("x",board.winner())
 
         board.board_state = {1:"o",2:"o",3:"o"}
-	self.assertEqual("o",board.winner())
+        self.assertEqual("o",board.winner())
 
         board.board_state = {}
         self.assertEqual(None,board.winner())
@@ -119,9 +119,9 @@ class BoardIsFullTests(unittest.TestCase):
 
     def test_is_full_on_full_board(self):
         board = Board()
-	board.board_state = {1:"x",2:"o",3:"x",
-			     4:"x",5:"o",6:"x",
-			     7:"o",8:"x",9:"o"}
+        board.board_state = {1:"x",2:"o",3:"x",
+                             4:"x",5:"o",6:"x",
+                             7:"o",8:"x",9:"o"}
         self.assertEqual(True, board.is_full())
 
 class BoardAvailableMovesTests(unittest.TestCase):
@@ -140,9 +140,9 @@ class BoardAvailableMovesTests(unittest.TestCase):
 
     def test_available_moves_when_all_spaces_occupied(self):
         board = Board()
-	board.board_state = {1:"x",2:"o",3:"x",
-			     4:"o",5:"x",6:"o",
-			     7:"x",8:"o",9:"x"}
+        board.board_state = {1:"x",2:"o",3:"x",
+                             4:"o",5:"x",6:"o",
+                             7:"x",8:"o",9:"x"}
         available_moves = board.available_moves()
         self.assertEqual([], available_moves)
 

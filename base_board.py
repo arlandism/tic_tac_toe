@@ -46,5 +46,15 @@ class BaseBoard(object):
     def winners(self):
         return self.rows() + self.columns() + self.diagonals() 
 
+    def is_full(self):
+        return self.state().keys() == self.keys
+
+    def available_moves(self):
+        moves_taken = self.state().keys()
+        return [move for move in self.keys if move not in moves_taken] 
+
+    def erase_move(self,move):
+        del self.board_state[move]
+
     def state(self):
         return self.board_state

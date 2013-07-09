@@ -36,4 +36,23 @@ class BaseBoardTests(unittest.TestCase):
                    [1,3],[2,4]]
         self.assertEqual(winners.sort(),BaseBoard(base=2).winners().sort())
 
+    def test_full(self):
+        board = BaseBoard(base=3)
+        board.board_state = {1:"o",2:"o",3:"x",
+                             4:"x",5:"x",6:"o",
+                             7:"o",8:"o",9:"x"}
+        self.assertTrue(board.is_full())
+        self.assertFalse(BaseBoard(base=2).is_full())
 
+    def test_available_moves(self):
+        self.assertEqual(range(1,17),BaseBoard(base=4).available_moves())
+        self.assertEqual(range(1,5),BaseBoard(base=2).available_moves())
+        board = BaseBoard(base=2)
+        board.board_state = {4:"x"}
+        self.assertEqual(range(1,4),board.available_moves())
+
+    def test_erase_move(self):
+        board = BaseBoard(base=2)
+        board.make_move(3,"x")
+        board.erase_move(3)
+        self.assertEqual({},board.state())
