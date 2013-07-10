@@ -1,12 +1,15 @@
 from board import Board
 from printer import Printer
-
 class Game(object):
 
-    def __init__(self,player_one,player_two,display_object=Printer()):
-        self.board = Board()
+    def __init__(self,player_one,player_two,board=None,display_object=None):
+        if board is None:
+            board = Board()
+        self.board = board 
         self.player_one = player_one
         self.player_two = player_two
+	if display_object is None:
+            display_object = Printer()
         self.display_method = display_object.display
 	self.current_player = player_one
     

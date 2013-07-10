@@ -6,6 +6,7 @@ from easy_ai import EasyAI
 from test_utils import FakePrinter, MockUserInput, MockPlayer
 from player import HumanPlayer
 from playerinput import InputValidator
+from fours_board import FourByFourBoard
 
 class GameRunTests(unittest.TestCase):
 
@@ -76,6 +77,13 @@ class GameRunTests(unittest.TestCase):
 	self.assertEqual("x",game.current_player.token)
 	game.run()
 	self.assertEqual("o",game.current_player.token)
+
+    def test_flow_with_fours_board(self):
+        input_one,input_two = self.create_fake_input_objects([9,10,11,12],[16,7,3,1])
+	player_one,player_two = self.create_fake_players(input_one,input_two)
+	game = Game(player_one,player_two,board=FourByFourBoard())
+	game.run()
+	self.assertTrue(game.board.over())
 
     def assertInputObjectsCalled(self,input_obj_one,input_obj_two):
 	self.assertTrue(input_obj_one.times_called >= 1 and
