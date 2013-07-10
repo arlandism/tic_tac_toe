@@ -5,8 +5,7 @@ class BaseBoard(object):
     def __init__(self,base=None):
         self.board_index = base
         if base is not None: self.keys = range(1,self.board_index * self.board_index+1)
-
-    board_state = dict()
+	self.board_state = dict()
 
     def make_move(self,space,token):
         self.board_state[space] = token
@@ -45,4 +44,14 @@ class BaseBoard(object):
 
     def state(self):
         return self.board_state
+
+    def generate_layout(self):
+        keys_present = self.board_state.keys()
+        keys_not_present = self.available_moves()
+        layout = dict()
+        for key in keys_present:
+            layout[str(key)] = self.board_state[key]
+        for key in keys_not_present:
+             layout[str(key)] = ""
+        return layout
 
