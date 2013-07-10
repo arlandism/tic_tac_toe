@@ -12,7 +12,6 @@ class BaseBoard(object):
         self.board_state[space] = token
 
     def winners(self):
-        print WinGenerator(self.board_index)
         return WinGenerator(self.board_index).winners()
 
     def winner(self):
@@ -22,8 +21,8 @@ class BaseBoard(object):
                     return self.winning_token(combo) 
 
     def pieces_match(self,combo):
-        tokens = [self.board_state[space] for space in range(1,len(combo))]
-        return tokens == tokens[::-1]
+        tokens = [self.board_state[space] for space in combo] 
+	return tokens[1:] == tokens[:-1]
 
     def moves_have_been_made(self,combo):
         return set(combo).issubset(set(self.state().keys()))
@@ -35,7 +34,7 @@ class BaseBoard(object):
         return self.state().keys() == self.keys
 
     def over(self):
-        return self.is_full() 
+        return bool(self.winner()) or self.is_full() 
 
     def available_moves(self):
         moves_taken = self.state().keys()

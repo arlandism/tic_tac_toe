@@ -1,6 +1,7 @@
 import unittest
 from board import Board
 from minimax import Minimax
+from base_board import BaseBoard
 
 class MinimaxNextMoveTests(unittest.TestCase):
 

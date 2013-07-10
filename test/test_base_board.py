@@ -13,9 +13,21 @@ class BaseBoardTests(unittest.TestCase):
         board.board_state = {1:"me",2:"me",3:"me"}
         self.assertEqual("me",board.winner())
 
-        new_board = BaseBoard(base=2)
-        new_board.board_state = {1:"you",4:"you"}
-        self.assertEqual("you",new_board.winner())
+        board = BaseBoard(base=2)
+        board.board_state = {1:"you",4:"you"}
+        self.assertEqual("you",board.winner())
+
+        board = BaseBoard(base=3)
+        board.board_state = {1:"x",2:"x",3:"o"}
+        self.assertEqual(None,board.winner())
+
+    def test_winner_with_tie(self):
+        board = BaseBoard(base=3)
+        board.board_state = {1:"x",2:"x",3:"o",
+                             4:"o",5:"x",6:"x",
+                             7:"x",8:"o",9:"o"}
+        self.assertTrue(board.is_full())
+        self.assertEqual(None,board.winner())
 
     def test_full(self):
         board = BaseBoard(base=3)
@@ -42,5 +54,5 @@ class BaseBoardTests(unittest.TestCase):
         self.assertFalse(BaseBoard(base=3).over())
         board = BaseBoard(base=3)
         board.board_state = {1:"x",2:"x",3:"x"}
-      #  self.assertTrue(board.over())
+        self.assertTrue(board.over())
        

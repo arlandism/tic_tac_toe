@@ -23,19 +23,3 @@ class Board(BaseBoard):
              layout[str(key)] = ""
         return layout
 
-    def over(self):
-        return bool(self.winner()) or self.is_full()
-
-    def winner(self):
-        for combo in self.winners():
-            if self.__pieces_match__(combo):
-                    return self.board_state[combo[0]]
-
-    def __pieces_match__(self,combo):
-        occupied_spaces = self.board_state.keys()
-        if combo[0] in occupied_spaces and combo[1] in occupied_spaces and combo[2] in occupied_spaces:
-            first_piece = self.board_state[combo[0]]
-            second_piece = self.board_state[combo[1]]
-            third_piece = self.board_state[combo[2]]
-            return first_piece == second_piece == third_piece
-        return False
