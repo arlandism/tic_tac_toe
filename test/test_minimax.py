@@ -1,27 +1,54 @@
 import unittest
+
 from board import Board
 from minimax import Minimax
 from base_board import BaseBoard
+from fours_board import FourByFourBoard
 
 class MinimaxNextMoveTests(unittest.TestCase):
 
-    def test_that_it_wins(self):
-        board = Board()
-	board.board_state = {1:"x",2:"x"}
-	self.assertEqual(3,Minimax("x",20).next_move(board))
+    def setUp(self):
+        self.x_minimax = Minimax("x",20)
+	self.o_minimax = Minimax("o",20)
+	self.board = Board()
+
+    def tearDown(self):
+        self.board.board_state = {} 
+
+    def test_if_minimax_chooses_winning_move_with_threat(self):
+        self.board.board_state = {1:"o", 2:"o", 4:"x", 5:"x"} 
+        self.assertEqual(3,self.o_minimax.next_move(self.board))
+
+    def test_minimax_move_defense(self):
+        computer = self.o_minimax
+        self.board.board_state = {1:"o", 5:"x", 9:"x"}
+        self.assertTrue(self.o_minimax.next_move(self.board) in (3,7))
+
+    def test_minimax_goes_for_fastest_win(self):
+        self.board.board_state = {1:"x", 2:"x"}
+	self.assertEqual(3,self.x_minimax.next_move(self.board))
 
     def test_that_it_counters(self):
-	board = Board()
-	board.board_state = {1:"x",2:"x"}
-	self.assertEqual(3,Minimax("o",20).next_move(board))
+	self.board.board_state = {1:"x",2:"x"}
+	self.assertEqual(3,self.o_minimax.next_move(self.board))
 
     def test_that_it_anticipates_setup(self):
-	board = Board()
-	board.board_state = {1:"x"}
-	self.assertEqual(5,Minimax("o",20).next_move(board))
+	self.board.board_state = {1:"x"}
+	self.assertEqual(5,self.o_minimax.next_move(self.board))
 
     def test_it_is_dumb_with_lower_depths(self):
-	board = Board()
-	board.board_state = {1:"x"}
-	self.assertNotEqual(5,Minimax("o",2).next_move(board))
+	self.board.board_state = {1:"x"}
+	self.assertNotEqual(5,Minimax("o",2).next_move(self.board))
 
+    def test_it_with_four_by_four(self):
+        board = FourByFourBoard()
+        board.board_state = {1: "x", 2: "x", 3: "x",
+                             5: "o", 6: "o", 7: "o", 8: "x",
+                             9: "x", 10: "o", 11: "x", 12: "x",
+                             13: "o", 14: "x", 15: "o", 16: "x"}
+	self.assertEqual(4,self.x_minimax.next_move(board))
+
+    def test_it_with_two_by_two(self):
+        board = BaseBoard(2)
+        board.board_state = {1:"x",3:"shoe",4:"moo"}
+	self.assertEqual(2,self.x_minimax.next_move(board))

@@ -1,27 +1,11 @@
 import unittest
+
 from board import Board
-from test_utils import FakePrinter
+from test_utils import FakePrinter, FakeMinimax
+
 from ai import *
 
 class AiNextMoveTests(unittest.TestCase):
-
-    def test_if_ai_blocks_potential_win(self):
-        computer = ImpossibleAI('x')
-        game_board = Board()
-        game_board.make_move(1,'o')
-        game_board.make_move(5,'x')
-        game_board.make_move(3,'o')
-        computer_move = computer.next_move(game_board)
-        self.assertEqual(2,computer_move)
-
-    def test_if_ai_blocks_diagonal_win(self):
-        game_board = Board()
-        computer = ImpossibleAI('x')
-        game_board.make_move(1,'o')
-        game_board.make_move(5,'o')
-        game_board.make_move(3,'x')
-        computer_move = computer.next_move(game_board)
-        self.assertEqual(9,computer_move)
 
     def test_if_ai_chooses_corner(self):
         computer = ImpossibleAI('o')
@@ -39,13 +23,6 @@ class AiNextMoveTests(unittest.TestCase):
         game_board.make_move(2,'o')
         computer_move = computer.next_move(game_board)
         self.assertEqual(3,computer_move)
-
-    def test_if_ai_stops_three_way_setup(self):
-        computer = ImpossibleAI('o')
-        game_board = Board()
-        game_board.make_move(1,'x')
-        computer_move = computer.next_move(game_board)
-        self.assertEqual(True,computer_move in (2,5))
 
     def test_ai_move_defense(self):
         board = Board()
@@ -77,3 +54,9 @@ class AiNextMoveTests(unittest.TestCase):
 	
 	status = history_string.find("x moves to 3")
 	self.assertNotEqual(NOT_FOUND,status)
+
+    def test_minimax_gets_called(self):
+        computer = ImpossibleAI("x")
+        fake_minimax = FakeMinimax() 
+	self.assertEqual("next move",computer.next_move(Board(),fake_minimax))
+
