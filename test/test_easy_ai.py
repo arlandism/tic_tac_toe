@@ -1,9 +1,10 @@
 import unittest
-from easy_ai import EasyAI
-from ai import ImpossibleAI
+
 from game import Game
 from board import Board
-from test_utils import FakePrinter
+from easy_ai import EasyAI
+from ai import ImpossibleAI
+from test_utils import FakePrinter,FakeMinimax
 
 class EasyAiTests(unittest.TestCase):
 
@@ -21,10 +22,6 @@ class EasyAiTests(unittest.TestCase):
 	game.run()
 	self.assertTrue(game.board.winner() != "x")
 
-    def test_easy_ai_has_token(self):
-        computer = EasyAI("o")
-        self.assertEqual("o",computer.token)
-
     def test_for_prompts(self):
 	fake_printer = FakePrinter()
 	computer = EasyAI("x",fake_printer)
@@ -40,3 +37,8 @@ class EasyAiTests(unittest.TestCase):
 
         status = history.find(computer.token.capitalize() + "'s turn")
 	self.assertNotEqual(NOT_FOUND,status)
+
+    def test_it_receives_minimax(self):
+        computer = EasyAI("x")
+	self.assertEqual("next move",computer.next_move(Board(),FakeMinimax()))
+
