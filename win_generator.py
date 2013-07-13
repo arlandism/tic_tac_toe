@@ -3,6 +3,7 @@ class WinGenerator(object):
     def __init__(self,index):
         self.board_index = index
         self.keys = range(1,index*index+1)
+        self.winning_combos = self.rows() + self.columns() + self.diagonals()
 
     def rows(self):
         row_list = []
@@ -38,6 +39,6 @@ class WinGenerator(object):
         return diagonal_list
 
     def winners(self):
-        return self.rows() + self.columns() + self.diagonals()
+        return self.winning_combos
 
 

@@ -1,5 +1,6 @@
-from fours_board import FourByFourBoard
 import unittest
+
+from fours_board import FourByFourBoard
 
 class FourByFourBoardTests(unittest.TestCase):
 

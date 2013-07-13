@@ -1,5 +1,6 @@
-from base_board import BaseBoard
 import unittest
+
+from base_board import BaseBoard
 
 class BaseBoardTests(unittest.TestCase):
 

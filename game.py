@@ -1,22 +1,21 @@
 from board import Board
 from printer import Printer
+
 class Game(object):
 
     def __init__(self,player_one,player_two,board=None,display_object=None):
-        if board is None:
-            board = Board()
+        if board is None:  board = Board()
         self.board = board 
         self.player_one = player_one
         self.player_two = player_two
-	if display_object is None:
-            display_object = Printer()
+	if display_object is None:  display_object = Printer()
         self.display_method = display_object.display
 	self.current_player = player_one
     
     def run(self):
         self.__introduction__()
         while not self.__over__():
-            self.__round_set__()
+            self.__round__()
         self.display_method(self.board)
         self.__print_winner__()
 
@@ -30,10 +29,6 @@ class Game(object):
         self.display_method(("\n1|2|3\n-------" +
                              "\n4|5|6\n-------" +
                              "\n7|8|9\n"))
-
-    def __round_set__(self):
-        self.__round__()
-        self.__round__()
 
     def __round__(self):
             if not self.__over__():

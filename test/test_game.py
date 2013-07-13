@@ -117,18 +117,6 @@ class GameRoundTests(unittest.TestCase):
         times_game_prompts_player_one = fake_player_one.input_object.times_called
         self.assertEqual(0,times_game_prompts_player_one)
  
-    def test_that_round_set_calls_each_player(self):
-        fake_player_one_input = MockUserInput([1])
-        fake_player_two_input = MockUserInput([2])
-        fake_player_one = MockPlayer("o",fake_player_one_input)
-        fake_player_two = MockPlayer("x",fake_player_two_input)
-        game = Game(fake_player_one,fake_player_two)
-        game.__round_set__()
-        times_game_prompts_player_one = fake_player_one_input.times_called
-        times_game_prompts_player_two = fake_player_two_input.times_called
-        self.assertEqual(1,times_game_prompts_player_one)
-        self.assertEqual(1,times_game_prompts_player_two)
-
     def test_that_sample_board_shown(self):
         fake_printer = FakePrinter()
         fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))

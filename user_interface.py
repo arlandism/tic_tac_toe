@@ -8,24 +8,19 @@ from prompter import Prompter
 
 class UserInterface(object):
 
-    def __init__(self,user_input,display_object=Printer()):
+    def __init__(self,user_input=None,display_object=None,
+                 selector=None,prompter=None):
+        if display_object is None:  display_object = Printer()
+        if user_input is None:  user_input = PlayerInput()
+        if selector is None:  selector = ScenarioSelector
+      	if prompter is None:  prompter = Prompter
         self.user_input = user_input
-    	self.display_object = display_object
-    	self.scenario_mapping = {1:HumanVsAiScenario,2:HumanVsHumanScenario, 
-			                    3:AiVsAiScenario, 4:HumanoidVsAiScenario}
-    	self.scenario_prompt = ("Please choose a scenario: \n" +
-                                "(1) Human vs AI\n" +
-                                "(2) Human vs Human\n" +
-                                "(3) AI vs AI\n" +
-                                "(4) Humanoid vs AI")
-    	self.scenario_choices = (1,2,3,4)
-
+      	self.display_object = display_object
+        self.selector = selector(user_input,display_object)
+        self.prompter = prompter(display_object,user_input)
 
     def game_setup(self):
-	    prompter = Prompter(self.display_object,self.user_input)
-	    prompter.prompt_and_collect_input({self.scenario_prompt: self.scenario_choices}) 
-	    chosen_scenario_number = prompter.return_answer_hash()[self.scenario_prompt] 
-	    chosen_scenario = self.scenario_mapping[chosen_scenario_number]
-	    prompter.prompt_and_collect_input(chosen_scenario.prompts())
-	    user_responses = prompter.return_answer_hash()
-	    return chosen_scenario(user_responses).setup() 
+        self.prompter.prompt_and_collect_input(self.selector.scenario_prompts())
+        user_responses = self.prompter.return_answer_hash()
+        scenario = self.selector.return_scenario(user_responses)
+        return scenario.setup()

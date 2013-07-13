@@ -1,7 +1,9 @@
 import unittest
-from prompter import *
+
 from test_utils import FakePrinter,MockUserInput
 from collections import OrderedDict
+
+from prompter import *
 
 class PrompterTests(unittest.TestCase):
 

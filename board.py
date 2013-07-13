@@ -3,7 +3,7 @@ from base_board import BaseBoard
 class Board(BaseBoard):
 
     def __init__(self):
-	super(Board,self).__init__(base=3)
+        super(Board,self).__init__(base=3)
 
     def __str__(self):
         board_template = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +

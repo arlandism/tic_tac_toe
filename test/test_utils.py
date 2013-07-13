@@ -38,7 +38,8 @@ class FakePrinter(object):
             return []
 
     def history_string(self):
-	return str(self.history)
+	history_string = "".join(self.history)
+	return history_string
 
 class MockScenario(object):
 
@@ -51,3 +52,13 @@ class MockScenario(object):
     @staticmethod
     def prompts():
 	return {"any letter will do": ascii_letters}
+
+class FakeMinimax(object):
+
+    def next_move(self,board):
+        return "next move"
+
+class MockPrompter(object):
+
+    def prompt_and_collect_input(self,prompt_hash):
+        return "prompter called"

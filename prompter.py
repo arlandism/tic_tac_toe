@@ -3,7 +3,9 @@ from playerinput import PlayerInput,InputValidator
 
 class Prompter(object):
 
-    def __init__(self,display_object=Printer(),input_object=PlayerInput()):
+    def __init__(self,display_object=None,input_object=None):
+        if display_object is None:  display_object = Printer()
+	if input_object is None:  input_object = PlayerInput()
 	self.display_method = display_object.display
 	self.input_object = input_object
 	self.answers = []

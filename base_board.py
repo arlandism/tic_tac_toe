@@ -4,14 +4,16 @@ class BaseBoard(object):
 
     def __init__(self,base=None):
         self.board_index = base
-        if base is not None: self.keys = range(1,self.board_index * self.board_index+1)
+        if base is not None: 
+            self.keys = range(1,self.board_index * self.board_index+1)
+            self.WINNING_COMBINATIONS = WinGenerator(self.board_index).winners()
 	self.board_state = dict()
 
     def make_move(self,space,token):
         self.board_state[space] = token
 
     def winners(self):
-        return WinGenerator(self.board_index).winners()
+        return self.WINNING_COMBINATIONS
 
     def winner(self):
         for combo in self.winners():

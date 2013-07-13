@@ -10,19 +10,18 @@ class Minimax(object):
       self.MAX_DEPTH = max_depth
 
   def next_move(self,board):
+      if board.state() == {}:
+          return board.keys[-1] 
       score_and_move_list = self.__build_score_and_move_list__(board)
       if score_and_move_list:
-	  best_score_and_move_list = max(score_and_move_list)
+          best_score_and_move_list = max(score_and_move_list)
 	  MOVE_INDEX = -1
           best_move = best_score_and_move_list[MOVE_INDEX] 
           return best_move
 
   def __build_score_and_move_list__(self,board):
-      move_list = []
       possible_moves = board.available_moves()
-      for move in possible_moves:
-          move_score = self.__best_score__(move,board,self.token)
-          move_list.append((move_score,move))
+      move_list = [(self.__best_score__(move,board,self.token),move) for move in possible_moves]
       return move_list
 
   def __best_score__(self, space, board, player, depth=1):

@@ -1,5 +1,6 @@
-from win_generator import WinGenerator
 import unittest
+
+from win_generator import WinGenerator
 
 class WinGeneratorTests(unittest.TestCase):
 

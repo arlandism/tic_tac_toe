@@ -5,11 +5,16 @@ from playerinput import InputValidator
 
 class Humanoid(object):
 
-    def __init__(self,token,input_object=PlayerInput(),display_object=Printer()):
+    def __init__(self,token, input_object=None,
+		 display_object=None, minimax=None):
 	self.token = token
         self.times_next_move_called = 0
+	if input_object is None:  input_object=PlayerInput()
+	if display_object is None:  display_object=Printer()
+	if minimax is None:  minimax=Minimax(self.token,6)
         self.input_object = input_object
 	self.display_method = display_object.display
+	self.minimax = minimax
  
     def next_move(self,board):
 	self.display_method(self.token.capitalize() + "'s turn")
@@ -17,7 +22,7 @@ class Humanoid(object):
         if self.times_next_move_called < 3:
 	    move = self.__human_intervention__(board)
         else:
-	    move =  Minimax(self.token,6).next_move(board)
+	    move =  self.minimax.next_move(board)
 	self.display_method(self.token.capitalize() + " moves to " + str(move))
 	return move
 

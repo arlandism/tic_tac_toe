@@ -1,7 +1,9 @@
 import unittest
-from player import *
+
 from test_utils import FakePrinter,MockUserInput
 from board import Board
+
+from player import *
 
 class PlayerInitTests(unittest.TestCase):
 

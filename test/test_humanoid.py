@@ -1,34 +1,46 @@
 import unittest
+
 from humanoid import Humanoid
 from board import Board
-from test_utils import MockUserInput,FakePrinter
+from test_utils import MockUserInput, FakePrinter, FakeMinimax
 
 class HumanoidNextMoveTests(unittest.TestCase):
+
+    def setUp(self):
+        self.board = Board()
+
+    def tearDown(self):
+        self.board.board_state = {}
 
     def test_first_move_is_human(self):
         mock = MockUserInput([1])      
         player = Humanoid("x",input_object=mock)
-        board = Board()
-        self.assertEqual(1,player.next_move(board))
+        self.assertEqual(1,player.next_move(self.board))
        
     def test_second_move_is_human(self):
         mock = MockUserInput([1,2])
         player = Humanoid("x",input_object=mock)
-        board = Board()
-        self.assertEqual(1,player.next_move(board))
-        self.assertEqual(2,player.next_move(board))
+        self.assertEqual(1,player.next_move(self.board))
+        self.assertEqual(2,player.next_move(self.board))
+
+    def test_gets_minimax(self):
+        player = Humanoid("x",input_object=MockUserInput([1,2,5]),
+			   minimax=FakeMinimax())
+	for i in range(3):
+            player.next_move(self.board)
+        self.assertEqual("next move", player.next_move(self.board))
 
     def test_third_move_is_ai(self):
         mock = MockUserInput([1,7])
         player = Humanoid("x",input_object=mock)
-        board = Board()
-        board.make_move(4,"o")
-        board.make_move(5,"o") 
-        self.assertEqual(1,player.next_move(board))
-        board.make_move(1,"x") 
-        self.assertEqual(7,player.next_move(board))
-        board.make_move(7,"x") 
-        self.assertEqual(6,player.next_move(board))
+	self.board.board_state = {4:"o", 5:"o"}
+        self.assertEqual(1,player.next_move(self.board))
+
+	self.board.board_state = {1:"x", 4:"o", 5:"o"}
+        self.assertEqual(7,player.next_move(self.board))
+
+        self.board.board_state = {1:"x", 4:"o", 5:"o", 7:"x"}
+        self.assertEqual(6,player.next_move(self.board))
                          
     def test_for_prompts(self):
 	mock = MockUserInput([1])
@@ -62,7 +74,6 @@ class HumanoidNextMoveTests(unittest.TestCase):
 	self.assertTrue(status == NOT_FOUND)
 
     def build_and_search_history_string(self,printer,search_string):
-        history_string = "".join(printer.history)
-	status = history_string.find(search_string)
+	status = printer.history_string().find(search_string)
 	return status
 
