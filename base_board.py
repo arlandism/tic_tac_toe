@@ -7,7 +7,7 @@ class BaseBoard(object):
         if base is not None: 
             self.keys = range(1,self.board_index * self.board_index+1)
             self.WINNING_COMBINATIONS = WinGenerator(self.board_index).winners()
-	self.board_state = dict()
+            self.board_state = dict()
 
     def make_move(self,space,token):
         self.board_state[space] = token
@@ -23,7 +23,7 @@ class BaseBoard(object):
 
     def pieces_match(self,combo):
         tokens = [self.board_state[space] for space in combo] 
-	return tokens[1:] == tokens[:-1]
+       	return tokens[1:] == tokens[:-1]
 
     def moves_have_been_made(self,combo):
         return set(combo).issubset(set(self.state().keys()))

@@ -5,10 +5,10 @@ from base_board import BaseBoard
 class BaseBoardTests(unittest.TestCase):
 
     def test_if_new_board_is_empty_dict(self):
-        self.assertEqual(dict(),BaseBoard().state())
+        self.assertEqual(dict(),BaseBoard(3).state())
 
     def test_make_move(self):
-        board = BaseBoard()
+        board = BaseBoard(3)
         board.make_move(1,"x")
         self.assertEqual({1:"x"},board.state())
 

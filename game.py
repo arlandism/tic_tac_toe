@@ -8,9 +8,9 @@ class Game(object):
         self.board = board 
         self.player_one = player_one
         self.player_two = player_two
-	if display_object is None:  display_object = Printer()
+      	if display_object is None:  display_object = Printer()
         self.display_method = display_object.display
-	self.current_player = player_one
+        self.current_player = player_one
     
     def run(self):
         self.__introduction__()
@@ -31,11 +31,11 @@ class Game(object):
                              "\n7|8|9\n"))
 
     def __round__(self):
-            if not self.__over__():
-		move = self.current_player.next_move(self.board)
-                self.__move__(move,self.current_player)
-		self.__alternate_player__()
-		self.__print_board_if_game_not_over__()
+        if not self.__over__():
+            move = self.current_player.next_move(self.board)
+            self.__move__(move,self.current_player)
+        self.__alternate_player__()
+        self.__print_board_if_game_not_over__()
 
     def __print_board_if_game_not_over__(self):
         if not self.__over__():
@@ -48,5 +48,5 @@ class Game(object):
         self.board.make_move(space,player.token)
 
     def __alternate_player__(self):
-	self.current_player = {self.player_one:self.player_two,
+        self.current_player = {self.player_one:self.player_two,
 			       self.player_two:self.player_one}[self.current_player]
