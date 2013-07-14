@@ -19,3 +19,5 @@ class HumanSetup(object):
 
     def difficulty(self):
         return self.ai_level
+
+        

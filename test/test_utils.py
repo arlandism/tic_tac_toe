@@ -38,20 +38,20 @@ class FakePrinter(object):
             return []
 
     def history_string(self):
-	history_string = "".join(self.history)
-	return history_string
+	      history_string = "".join(self.history)
+	      return history_string
 
 class MockScenario(object):
 
     def __init__(self):
-	pass
+        pass
 
     def setup(self):
-	return "glitch in the matrix."
+        return "glitch in the matrix."
 
     @staticmethod
-    def prompts():
-	return {"any letter will do": ascii_letters}
+    def prompts(more_prompts):
+        return "Mock Scenario Prompt"
 
 class FakeMinimax(object):
 

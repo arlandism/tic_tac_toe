@@ -23,5 +23,5 @@ class HumanoidVsAiScenario(object):
         return Game(player_one,player_two)
 
     @staticmethod
-    def prompts():
-        return HumanPromptInterface.prompts()
+    def prompts(more_prompts):
+        return HumanPromptInterface.prompts(more_prompts)

@@ -9,6 +9,19 @@ class BaseBoard(object):
             self.WINNING_COMBINATIONS = WinGenerator(self.board_index).winners()
             self.board_state = dict()
 
+    def __str__(self):
+        board_template = []
+        dashes = "-" * self.board_index * self.board_index
+        left_side = "%("
+        right_side = ")3s"
+        for number in self.keys:
+          if number % self.board_index == 0:
+              board_template.append(left_side + str(number) + right_side + "\n" + dashes + "\n")
+          else:
+              board_template.append(left_side + str(number) + right_side)
+        board_template = "".join(board_template)
+        return board_template.rstrip("\n" + dashes) % self.generate_layout()
+
     def make_move(self,space,token):
         self.board_state[space] = token
 
