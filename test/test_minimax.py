@@ -2,7 +2,6 @@ import unittest
 
 from minimax import Minimax
 from base_board import BaseBoard
-from fours_board import FourByFourBoard
 
 class MinimaxNextMoveTests(unittest.TestCase):
 
@@ -40,7 +39,7 @@ class MinimaxNextMoveTests(unittest.TestCase):
         self.assertNotEqual(3,Minimax("o",1).next_move(self.board))
 
     def test_it_with_four_by_four(self):
-        board = FourByFourBoard()
+        board = BaseBoard(4)
         board.board_state = {1: "x", 2: "x", 3: "x",
                              5: "o", 6: "o", 7: "o", 8: "x",
                              9: "x", 10: "o", 11: "x", 12: "x",
