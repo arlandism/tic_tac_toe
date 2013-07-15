@@ -143,3 +143,10 @@ class GamePrintBoardIfNotOverTests(unittest.TestCase):
         game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
         game.run()
         self.assertTrue(len(fake_printer.history) >= 6)
+
+class GameQuitTests(unittest.TestCase):
+
+    def test_can_quit_game(self):
+        fake_player_one = MockPlayer("x",MockUserInput([1,"q"]))
+        fake_player_two = MockPlayer("o",MockUserInput([3]))
+        game = Game(fake_player_one,fake_player_two)

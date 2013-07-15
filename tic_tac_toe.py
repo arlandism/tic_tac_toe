@@ -1,7 +1,7 @@
 from user_interface import UserInterface
-from playerinput import PlayerInput
+from game_builder import GameBuilder
 
 if __name__ == "__main__":
-    ui = UserInterface(user_input=PlayerInput())
-    game = ui.game_setup()
+    user_interface = UserInterface()
+    game = GameBuilder.game(user_interface.collected_data())
     game.run()

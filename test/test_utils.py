@@ -1,6 +1,5 @@
 from player import HumanPlayer
-from string import ascii_letters
-
+from collections import OrderedDict
 
 class MockUserInput(object):
 
@@ -10,7 +9,10 @@ class MockUserInput(object):
 
     def call(self):
         self.__increment_times_called__()
-        return self.data.pop(0)
+        try:
+            return self.data.pop(0)
+        except IndexError:
+            print "Sorry, nothing left"
 
     def __increment_times_called__(self):
         self.times_called += 1
@@ -40,18 +42,6 @@ class FakePrinter(object):
 	      history_string = "".join(self.history)
 	      return history_string
 
-class MockScenario(object):
-
-    def __init__(self):
-        pass
-
-    def setup(self):
-        return "glitch in the matrix."
-
-    @staticmethod
-    def prompts(more_prompts):
-        return "Mock Scenario Prompt"
-
 class FakeMinimax(object):
 
     def next_move(self,board):
@@ -59,5 +49,26 @@ class FakeMinimax(object):
 
 class MockPrompter(object):
 
-    def prompt_and_collect_input(self,prompt_hash):
-        return "prompter called"
+    def __init__(self,display_object,user_input):
+        self.display_method = display_object.display
+        self.display_method("Mock Prompter Present!")
+        self.user_input = user_input
+        self.answers = []
+        self.prompt_hash = {}
+
+    def prompt_and_collect_input(self,prompts):
+        for prompt in prompts:
+            self.display_method(prompt)
+            answer = self.user_input.call()
+            self.answers.append(answer)
+            self.prompt_hash[prompt] = answer
+
+    def return_answer_hash(self):
+        return self.prompt_hash
+
+class MockStore(object):
+    
+    game_prompts = OrderedDict()
+    game_prompts["insert random prompt here"] = ""
+
+

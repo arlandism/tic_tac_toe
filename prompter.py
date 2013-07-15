@@ -23,3 +23,6 @@ class Prompter(object):
 
     def return_answer_hash(self):
         return self.prompt_hash
+
+    def display(self,x):
+        print x 

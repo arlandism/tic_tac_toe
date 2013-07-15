@@ -15,7 +15,7 @@ class Minimax(object):
       score_and_move_list = self.__build_score_and_move_list__(board)
       if score_and_move_list:
           best_score_and_move_list = max(score_and_move_list)
-	  MOVE_INDEX = -1
+          MOVE_INDEX = -1
           best_move = best_score_and_move_list[MOVE_INDEX] 
           return best_move
 
@@ -27,7 +27,7 @@ class Minimax(object):
   def __best_score__(self, space, board, player, depth=1):
       try:
           board.make_move(space,player)
-	  if board.over() or depth == self.MAX_DEPTH: 
+          if board.over() or depth == self.MAX_DEPTH: 
               return ((self.__cost_function__(board.winner()) * self.MAX_DEPTH) / depth)
           return self.__alpha_beta_prune__(board, player,depth)
       finally:

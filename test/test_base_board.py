@@ -126,11 +126,3 @@ class BaseBoardOverTests(unittest.TestCase):
                              13:"x",14:"x",15:"o",16:"x"}
         self.assertFalse(board.winner())
         self.assertTrue(board.over())
-
-class BaseBoardLayoutGenerationTests(unittest.TestCase):
-       
-    def test_layout_generation(self):
-        board = BaseBoard(base=2)
-       	board.board_state = {1:"A"}
-        expected_layout = {"1":"A","2":"","3":"","4":""}
-        self.assertEqual(expected_layout,board.generate_layout())

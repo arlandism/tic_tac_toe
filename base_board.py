@@ -1,4 +1,5 @@
 from win_generator import WinGenerator
+from board_generator import BoardStringGenerator
 
 class BaseBoard(object):
 
@@ -10,17 +11,8 @@ class BaseBoard(object):
             self.board_state = dict()
 
     def __str__(self):
-        board_template = []
-        dashes = "-" * self.board_index * self.board_index
-        left_side = "%("
-        right_side = ")3s"
-        for number in self.keys:
-          if number % self.board_index == 0:
-              board_template.append(left_side + str(number) + right_side + "\n" + dashes + "\n")
-          else:
-              board_template.append(left_side + str(number) + right_side)
-        board_template = "".join(board_template)
-        return board_template.rstrip("\n" + dashes) % self.generate_layout()
+        generator = BoardStringGenerator(self.board_index,self.state())
+        return generator.generate_template() % generator.generate_layout()
 
     def make_move(self,space,token):
         self.board_state[space] = token
@@ -59,14 +51,3 @@ class BaseBoard(object):
 
     def state(self):
         return self.board_state
-
-    def generate_layout(self):
-        keys_present = self.board_state.keys()
-        keys_not_present = self.available_moves()
-        layout = dict()
-        for key in keys_present:
-            layout[str(key)] = self.board_state[key]
-        for key in keys_not_present:
-             layout[str(key)] = ""
-        return layout
-
