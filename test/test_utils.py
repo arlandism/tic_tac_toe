@@ -1,5 +1,4 @@
 from player import HumanPlayer
-from board import Board
 from string import ascii_letters
 
 

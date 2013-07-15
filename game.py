@@ -1,10 +1,10 @@
-from board import Board
+from base_board import BaseBoard
 from printer import Printer
 
 class Game(object):
 
     def __init__(self,player_one,player_two,board=None,display_object=None):
-        if board is None:  board = Board()
+        if board is None:  board = BaseBoard(3)
         self.board = board 
         self.player_one = player_one
         self.player_two = player_two

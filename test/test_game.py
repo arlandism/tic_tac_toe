@@ -1,7 +1,6 @@
 import unittest
 from game import *
 from base_board import BaseBoard
-from board import *
 from ai import ImpossibleAI
 from test_utils import FakePrinter, MockUserInput, MockPlayer
 from player import HumanPlayer
@@ -36,9 +35,7 @@ class GameRunTests(unittest.TestCase):
         game.board.board_state = {1:"x",2:"x",3:"x"}
         game.run()
         self.assertEqual(True,game.__over__())
-        expected_string = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +
-                           "\n%(4)3s|%(5)3s|%(6)3s\n------------" +
-                           "\n%(7)3s|%(8)3s|%(9)3s") % game.board.generate_layout()
+        expected_string = game.board.__str__()
         self.assertTrue(expected_string in fake_printer.history)
 
     def test_that_game_prints_board_after_each_set_of_rounds(self):
