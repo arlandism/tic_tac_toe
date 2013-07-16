@@ -7,7 +7,7 @@ class PlayerFactory(object):
 
     @staticmethod
     def player(player_type,token):
-        if player_type == "EasyAi":
+        if player_type == "EasyAI":
             return ImpossibleAI(token,minimax=Minimax(token,1))
         players = {"Human":HumanPlayer,
                    "Humanoid":Humanoid,
