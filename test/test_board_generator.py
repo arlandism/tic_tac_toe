@@ -46,3 +46,9 @@ class BoardTemplateGeneratorTests(unittest.TestCase):
         board_template = row_one + dashes + row_two + dashes + row_three 
         generator = BoardStringGenerator(3,{})
         self.assertEqual(board_template,generator.generate_template())
+
+class BoardTemplateExampleBoardTests(unittest.TestCase):
+   
+    def test_example_board_with_threes_board(self):
+        example_board = (" 1  2  3 \n--------- 4  5  6 \n--------- 7  8  9")
+        self.assertEqual(example_board,BoardStringGenerator.example_board(3))

@@ -126,3 +126,8 @@ class BaseBoardOverTests(unittest.TestCase):
                              13:"x",14:"x",15:"o",16:"x"}
         self.assertFalse(board.winner())
         self.assertTrue(board.over())
+
+class ExampleBoardTests(unittest.TestCase):
+
+    def test_example_board(self):
+        example_board = (" 1  2  3 \n--------- 4  5  6 \n--------- 7  8  9")

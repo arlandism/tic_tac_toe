@@ -17,6 +17,6 @@ class HumanPlayer(object):
         self.display_method(self.token.capitalize() + "'s turn")
         self.display_method("Please select a move: ")
         self.display_method("Available moves are " + str(board.available_moves()))	
-        move = InputValidator.return_valid_response(self.input_object,board.available_moves())
+        move = InputValidator.return_valid_response(self.input_object, board.available_moves())
         return move 
 

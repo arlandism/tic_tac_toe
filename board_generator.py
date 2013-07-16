@@ -29,3 +29,10 @@ class BoardStringGenerator(object):
               board_template.append(left_side + str(number) + right_side)
         board_template = "".join(board_template)
         return board_template.rstrip("\n" + dashes) 
+
+    def example_board(self):
+        num_keys = index * index
+        dictionary = {}
+        for key in range(1,num_keys):
+            dictionary[key] = str(key)
+        return self.generate_template() % dictionary

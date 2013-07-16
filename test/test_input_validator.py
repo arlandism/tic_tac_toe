@@ -18,4 +18,10 @@ class InputValidatorTests(unittest.TestCase):
       valid_responses = (1,2,3)
       input_source = MockUserInput(["a","b",7,2])
       self.assertEqual(2,InputValidator.return_valid_response(input_source,valid_responses))
- 
+
+  def test_it_allows_quit(self):
+      input_source = MockUserInput(["quit"])
+      function = InputValidator.return_valid_response
+      arg_one = input_source
+      arg_two = "this test should exit"
+      self.assertRaises(SystemExit,function,arg_one,arg_two)
