@@ -68,7 +68,32 @@ class MockPrompter(object):
 
 class MockStore(object):
     
-    game_prompts = OrderedDict()
-    game_prompts["insert random prompt here"] = ""
+    game_prompts = {"insert random prompt here":""}
 
+class MockParser(object):
 
+    def __init__(self,user_data):
+        self.user_data = user_data
+
+    def first_player(self):
+        return self.user_data["Player One"]
+
+    def first_token(self):
+        return "x"
+
+    def second_player(self):
+        return self.user_data["Player Two"]
+
+    def second_token(self):
+        return "o"
+
+    def board_size(self):
+        return self.user_data["board"] 
+
+        return self.gameboard.size
+
+class MockFactory(object):
+
+   @staticmethod
+   def player(player_type,token):
+       return player_type

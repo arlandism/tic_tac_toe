@@ -1,11 +1,12 @@
 import unittest
 
 from prompt_parser import *
+from prompt_store import PromptStore
 
 class PromptParserTokenTests(unittest.TestCase):
 
     def setUp(self):
-        self.token_one_prompt = "What's the first player's token (x,o)? "
+        self.token_one_prompt = PromptStore().first_token() 
 
     def test_first_token_x(self):
         user_data = {self.token_one_prompt:"x"}
@@ -32,9 +33,7 @@ class PromptParserTokenTests(unittest.TestCase):
 class PromptParserPlayerTests(unittest.TestCase):
 
     def setUp(self):
-        player_string = ("\nHuman\n" + "Humanoid\n" + "ImpossibleAI\n" + "EasyAi\n")
-        self.first_player_prompt = ("The first player is a..." +
-                         player_string) 
+        self.first_player_prompt = PromptStore().player_string()
 
     def test_first_player_humanoid(self):
         user_data = {self.first_player_prompt:"Humanoid"}
@@ -47,7 +46,7 @@ class PromptParserPlayerTests(unittest.TestCase):
 class PromptParserSecondPlayerTests(unittest.TestCase):
     
     def test_second_player_ai(self):
-        user_data = {"And the second... same options ":"ImpossibleAI"}
+        user_data = {PromptStore().second_player():"ImpossibleAI"}
         self.assertEqual("ImpossibleAI",PromptParser(user_data).second_player())
 
     def test_second_player_human(self):
@@ -57,7 +56,7 @@ class PromptParserSecondPlayerTests(unittest.TestCase):
 class PromptParserBoardTests(unittest.TestCase):
 
     def setUp(self):
-        self.board_prompt = "Board size please... "
+        self.board_prompt = PromptStore().board()
 
     def test_board_three(self):
         user_data = {self.board_prompt:3}
@@ -66,4 +65,3 @@ class PromptParserBoardTests(unittest.TestCase):
     def test_board_four(self):
         user_data = {self.board_prompt:4}
         self.assertEqual(4,PromptParser(user_data).board_size())
-

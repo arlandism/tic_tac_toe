@@ -50,5 +50,6 @@ class BoardTemplateGeneratorTests(unittest.TestCase):
 class BoardTemplateExampleBoardTests(unittest.TestCase):
    
     def test_example_board_with_threes_board(self):
-        example_board = (" 1  2  3 \n--------- 4  5  6 \n--------- 7  8  9")
-        self.assertEqual(example_board,BoardStringGenerator.example_board(3))
+        example_board = ("  1  2  3\n---------\n  4  5  6\n---------\n  7  8  9")
+        self.assertEqual(example_board,BoardStringGenerator(3).example_board())
+

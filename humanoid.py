@@ -1,6 +1,5 @@
-from playerinput import PlayerInput
 from minimax import Minimax
-from printer import Printer
+from prompter import Prompter
 from playerinput import InputValidator
 
 class Humanoid(object):
@@ -8,8 +7,8 @@ class Humanoid(object):
     def __init__(self,token, input_object=None,
                  display_object=None, minimax=None):
         self.token = token
-        if input_object is None:  input_object=PlayerInput()
-        if display_object is None:  display_object=Printer()
+        if input_object is None:  input_object=Prompter()
+        if display_object is None:  display_object=Prompter()
         if minimax is None:  minimax=Minimax(self.token,6)
         self.input_object = input_object
         self.display_method = display_object.display

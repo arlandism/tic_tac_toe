@@ -113,18 +113,6 @@ class GameRoundTests(unittest.TestCase):
         times_game_prompts_player_one = fake_player_one.input_object.times_called
         self.assertEqual(0,times_game_prompts_player_one)
  
-    def test_that_sample_board_shown(self):
-        fake_printer = FakePrinter()
-        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
-        game.run()
-        example_board = ("\n1|2|3\n-------" +
-                          "\n4|5|6\n-------" +
-                          "\n7|8|9\n")
-        self.assertTrue(example_board in fake_printer.history)
-
-
 class GamePrintBoardIfNotOverTests(unittest.TestCase):
 
     def test_that_board_isnt_printed_when_game_over(self):

@@ -1,3 +1,4 @@
+from prompt_store import PromptStore
 
 class PromptParser(object):
 
@@ -5,17 +6,17 @@ class PromptParser(object):
         self.user_data = user_data
 
     def first_token(self):
-        return self.user_data.get("What's the first player's token (x,o)? ",-1)
+        return self.user_data.get(PromptStore().first_token(),-1)
 
     def second_token(self):
         first_token = self.first_token()
         return {"x":"o","o":"x"}.get(first_token,-1)
 
     def first_player(self):
-        return self.user_data.get("The first player is a...\n" + "Human\nHumanoid\nImpossibleAI\nEasyAI")  
+        return self.user_data.get(PromptStore().player_string())
 
     def second_player(self):
-        return self.user_data.get("And the second... same options ")
+        return self.user_data.get(PromptStore().second_player())
 
     def board_size(self):
-        return self.user_data.get("Board size please... ")
+        return self.user_data.get(PromptStore().board())

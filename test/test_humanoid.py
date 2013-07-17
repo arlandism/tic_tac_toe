@@ -47,33 +47,7 @@ class HumanoidNextMoveTests(unittest.TestCase):
         fake_printer = FakePrinter()
         humanoid = Humanoid("x",mock,fake_printer)
         humanoid.next_move(BaseBoard(3))
-        NOT_FOUND = -1
-        history = "".join(fake_printer.history)
-        status = history.find(humanoid.token.capitalize() + "'s turn")
-        self.assertNotEqual(NOT_FOUND,status)
-        
-        status = history.find(humanoid.token.capitalize() + " moves to 1")
-        self.assertNotEqual(NOT_FOUND,status)
-
-        status = history.find("Available moves are " + str(BaseBoard(3).available_moves()))
-        self.assertNotEqual(NOT_FOUND,status)
-
-        status = history.find("Please select a move: ")
-        self.assertNotEqual(NOT_FOUND,status)
-
-    def test_that_input_prompts_arent_shown_to_humanoid_ai(self):
-        fake_printer = FakePrinter()
-        humanoid = Humanoid("x",fake_printer)
-        humanoid.times_next_move_called = 3
-        humanoid.next_move(BaseBoard(3))
-        NOT_FOUND = -1
-        status = self.build_and_search_history_string(fake_printer,"Available moves are")
-        self.assertTrue(status == NOT_FOUND)
-
-        status = self.build_and_search_history_string(fake_printer,"Please select a move: ")
-        self.assertTrue(status == NOT_FOUND)
-
-    def build_and_search_history_string(self,printer,search_string):
-        status = printer.history_string().find(search_string)
-        return status
-
+        self.assertTrue("X's turn" in fake_printer.history_string())
+        self.assertTrue("Available moves are " in fake_printer.history_string())
+        self.assertTrue("X moves to 1" in fake_printer.history_string())
+        self.assertTrue("Please select a move: " in fake_printer.history_string())

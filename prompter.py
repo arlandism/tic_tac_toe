@@ -1,11 +1,12 @@
 from printer import Printer
-from playerinput import PlayerInput,InputValidator
+from playerinput import PlayerInput, InputValidator
 
 class Prompter(object):
 
     def __init__(self,display_object=None,input_object=None):
         if display_object is None:  display_object = Printer()
         if input_object is None:  input_object = PlayerInput()
+        self.display_object = display_object
         self.display_method = display_object.display
         self.input_object = input_object
         self.answers = []
@@ -24,5 +25,8 @@ class Prompter(object):
     def return_answer_hash(self):
         return self.prompt_hash
 
+    def call(self):
+        return raw_input()
+
     def display(self,x):
-        print x 
+        self.display_method(x) 

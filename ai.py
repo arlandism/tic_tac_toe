@@ -1,10 +1,10 @@
 from minimax import Minimax
-from printer import Printer
+from prompter import Prompter
 
 class ImpossibleAI(object):
 
     def __init__(self,token,display_object=None,minimax=None):
-        if display_object is None:  display_object=Printer()
+        if display_object is None:  display_object=Prompter()
       	self.token = token
         if minimax is None:  minimax=Minimax(self.token,20)
         self.minimax = minimax

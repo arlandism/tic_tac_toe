@@ -1,9 +1,10 @@
 
 class BoardStringGenerator(object):
 
-    def __init__(self,index,state):
+    def __init__(self,index,state=None):
         self.index = index
         self.cells = [cell for cell in range(1,self.index * self.index+1)]
+        if state is None:  state = {}
         self.state = state
       
     def generate_layout(self):
@@ -31,8 +32,8 @@ class BoardStringGenerator(object):
         return board_template.rstrip("\n" + dashes) 
 
     def example_board(self):
-        num_keys = index * index
+        num_keys = (self.index * self.index) + 1
         dictionary = {}
         for key in range(1,num_keys):
-            dictionary[key] = str(key)
+            dictionary[str(key)] = key
         return self.generate_template() % dictionary
