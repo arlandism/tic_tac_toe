@@ -17,6 +17,25 @@ class MockUserInput(object):
     def __increment_times_called__(self):
         self.times_called += 1
 
+class SimpleMockPrompter(object):
+
+    def __init__(self,vals=None):
+        if vals is None:  vals = []
+        self.vals = vals
+        self.history = []
+        self.times_called = 0
+
+    def call(self):
+        self.times_called += 1
+        return self.vals.pop(0)
+
+    def display(self,x):
+        self.history.append(x)
+        print x
+
+    def history_string(self):
+        return "".join(self.history)
+
 class MockPlayer(HumanPlayer):
 
     def __init__(self,token,fake_input):
@@ -42,17 +61,6 @@ class FakePrinter(object):
 	      history_string = "".join(self.history)
 	      return history_string
 
-class MockPrompter(object):
-
-    def __init__(self,input_object,display_object):
-        self.input_object = input_object
-        self.display_object = display_object
-
-    def call(self):
-        self.input_object.call()
-
-    def display(self,x):
-        self.display_object.display(x)
 
 class FakeMinimax(object):
 
@@ -107,5 +115,5 @@ class MockParser(object):
 class MockFactory(object):
 
    @staticmethod
-   def player(player_type,token):
+   def player(player_type,token,display_object=None):
        return player_type

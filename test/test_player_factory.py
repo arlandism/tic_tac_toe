@@ -5,7 +5,7 @@ from ai import ImpossibleAI
 from humanoid import Humanoid
 from player_factory import PlayerFactory
 from base_board import BaseBoard
-from test_utils import FakePrinter
+from test_utils import FakePrinter,SimpleMockPrompter
 
 class PlayerFactoryTests(unittest.TestCase):
 
@@ -29,7 +29,6 @@ class PlayerFactoryTests(unittest.TestCase):
         self.assertTrue(player.next_move(board) != 3)
 
     def test_display_object_passed_in_to_factory(self):
-        display_object = FakePrinter()
-        player = PlayerFactory.player("Human","x",display_object)
-        self.assertEqual(display_object,player.display_object)
-
+        display_object = SimpleMockPrompter()
+        player = PlayerFactory.player("Humanoid","x",display_object)
+        self.assertEqual(display_object,player.prompter)

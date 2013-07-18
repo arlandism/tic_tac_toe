@@ -9,8 +9,8 @@ class PlayerFactory(object):
     @staticmethod
     def player(player_type,token,display_object=None):
         if display_object is None:  display_object=Prompter()
-        players = {"Human":HumanPlayer(token,display_object=display_object),
-                   "Humanoid":Humanoid(token,display_object=display_object),
+        players = {"Human":HumanPlayer(token,display_object),
+                   "Humanoid":Humanoid(token,display_object),
                    "ImpossibleAI":ImpossibleAI(token,display_object),
                    "EasyAI":ImpossibleAI(token,display_object,Minimax(token,1))}
         return players.get(player_type)

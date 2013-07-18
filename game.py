@@ -5,31 +5,31 @@ import sys
 
 class Game(object):
 
-    def __init__(self,player_one,player_two,board=None,display_object=None):
+    def __init__(self,player_one,player_two,board=None,prompter=None):
         if board is None:  board = BaseBoard(3)
-      	if display_object is None:  display_object = Prompter()
+      	if prompter is None:  prompter = Prompter()
         self.board = board
         self.player_one = player_one
         self.player_two = player_two
-        self.display_object = display_object
+        self.prompter = prompter
         self.current_player = player_one
     
     def run(self):
         self.__introduction__()
         while not self.__over__():
             self.__round__()
-        self.display_object.display(self.board)
+        self.prompter.display(self.board)
         self.__print_winner__()
 
     def __print_winner__(self):
         if self.board.winner():
-            self.display_object.display(self.board.winner() + " wins")
+            self.prompter.display(self.board.winner() + " wins")
         else:
-            self.display_object.display("It's a tie.")
+            self.prompter.display("It's a tie.")
 
     def __introduction__(self):
         example_board = BoardStringGenerator(self.board.board_index).example_board()
-        self.display_object.display(example_board + "Type 'quit' and press Enter anytime to quit")
+        self.prompter.display(example_board + "\nType 'quit' and press Enter anytime to quit")
 
     def __round__(self):
         if not self.__over__():
@@ -40,7 +40,7 @@ class Game(object):
 
     def __print_board_if_game_not_over__(self):
         if not self.__over__():
-            self.display_object.display(self.board)
+            self.prompter.display(self.board)
 
     def __over__(self):
         return self.board.over() 

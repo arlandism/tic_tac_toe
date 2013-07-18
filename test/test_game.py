@@ -2,11 +2,14 @@ import unittest
 from game import *
 from base_board import BaseBoard
 from ai import ImpossibleAI
-from test_utils import FakePrinter, MockUserInput, MockPlayer
+from test_utils import FakePrinter,SimpleMockPrompter, MockUserInput,MockPlayer
 from player import HumanPlayer
 from playerinput import InputValidator
 
 class GameRunTests(unittest.TestCase):
+
+    def setUp(self):
+        self.user_input = SimpleMockPrompter 
 
     def test_that_players_move(self):
         player_one_input,player_two_input = self.create_fake_input_objects([1,2,3],[4,5,6])
@@ -16,22 +19,22 @@ class GameRunTests(unittest.TestCase):
         self.assertInputObjectsCalled(player_one_input,player_two_input)
 
     def test_that_players_dont_move_when_game_over(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1]))
-        fake_player_two = MockPlayer("o",MockUserInput([2]))
+        fake_player_one = MockPlayer("x",self.user_input([1]))
+        fake_player_two = MockPlayer("o",self.user_input([2]))
         game = Game(fake_player_one,fake_player_two)
         game.board.board_state = {1:"x",2:"o",3:"x",
 			                            4:"o",5:"x",6:"o",
 				                          7:"x",8:"o",9:"x"}
         self.assertEqual(True,game.board.over())
         game.run()
-        self.assertInputObjectsNotCalled(fake_player_one.input_object,
-			                                   fake_player_two.input_object)
+        self.assertInputObjectsNotCalled(fake_player_one.prompter,
+			                                   fake_player_two.prompter)
 
     def test_that_board_is_printed_when_game_is_over(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1]))
-        fake_player_two = MockPlayer("o",MockUserInput([2]))
+        fake_player_one = MockPlayer("x",self.user_input([1]))
+        fake_player_two = MockPlayer("o",self.user_input([2]))
         fake_printer = FakePrinter()
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.board.board_state = {1:"x",2:"x",3:"x"}
         game.run()
         self.assertEqual(True,game.__over__())
@@ -39,28 +42,28 @@ class GameRunTests(unittest.TestCase):
         self.assertTrue(expected_string in fake_printer.history)
 
     def test_that_game_prints_board_after_each_set_of_rounds(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
+        fake_player_one = MockPlayer("x",self.user_input([1,2,3]))
+        fake_player_two = MockPlayer("o",self.user_input([4,5]))
         fake_printer = FakePrinter()
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.run()
         # Two sets of rounds plus final print
         self.assertTrue(len(fake_printer.history) >= 6)
 
     def test_that_game_displays_winner(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
+        fake_player_one = MockPlayer("x",self.user_input([1,2,3]))
+        fake_player_two = MockPlayer("o",self.user_input([4,5]))
         fake_printer = FakePrinter()
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.run()
         self.assertEqual("x",game.board.winner())
         self.assertTrue("x wins" in fake_printer.history)
 
     def test_that_game_prints_tie(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1,6,8,7,5]))
-        fake_player_two = MockPlayer("o",MockUserInput([2,3,4,9]))
+        fake_player_one = MockPlayer("x",self.user_input([1,6,8,7,5]))
+        fake_player_two = MockPlayer("o",self.user_input([2,3,4,9]))
         fake_printer = FakePrinter()
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.run()
         self.assertEqual(None,game.board.winner())
         self.assertTrue("It's a tie." in fake_printer.history)
@@ -96,39 +99,35 @@ class GameRunTests(unittest.TestCase):
         return player_one, player_two
     
     def create_fake_input_objects(self,input_list_one,input_list_two):
-        input_one = MockUserInput(input_list_one)
-        input_two = MockUserInput(input_list_two)
+        input_one = self.user_input(input_list_one)
+        input_two = self.user_input(input_list_two)
         return input_one, input_two
 
-class GameRoundTests(unittest.TestCase):
-
     def test_that_round_doesnt_run_when_game_over(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4]))
+        fake_player_one = MockPlayer("x",self.user_input([1,2,3]))
+        fake_player_two = MockPlayer("o",self.user_input([4]))
         game = Game(fake_player_one,fake_player_two)
         for i in range(1,4):
             game.board.make_move(i,"o")
         self.assertTrue(game.board.over())
         game.run()
-        times_game_prompts_player_one = fake_player_one.input_object.times_called
+        times_game_prompts_player_one = fake_player_one.prompter.times_called
         self.assertEqual(0,times_game_prompts_player_one)
  
-class GamePrintBoardIfNotOverTests(unittest.TestCase):
-
     def test_that_board_isnt_printed_when_game_over(self):
         fake_printer = FakePrinter()
-        fake_player_one = MockPlayer("x",MockUserInput([1]))
-        fake_player_two = MockPlayer("o",MockUserInput([2]))
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        fake_player_one = MockPlayer("x",self.user_input([1]))
+        fake_player_two = MockPlayer("o",self.user_input([2]))
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.__print_board_if_game_not_over__()
         #Game gets printed once when game over
         self.assertEqual(1,len(fake_printer.history))
 
     def test_that_board_is_printed_when_game_not_over(self):
         fake_printer = FakePrinter()
-        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
+        fake_player_one = MockPlayer("x",self.user_input([1,2,3]))
+        fake_player_two = MockPlayer("o",self.user_input([4,5]))
+        game = Game(fake_player_one,fake_player_two,prompter=fake_printer)
         game.run()
         self.assertTrue(len(fake_printer.history) >= 6)
 
