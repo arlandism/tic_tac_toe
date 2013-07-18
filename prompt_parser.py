@@ -1,4 +1,5 @@
 from prompt_store import PromptStore
+from token_info import TokenInfo as ti
 
 class PromptParser(object):
 
@@ -9,8 +10,7 @@ class PromptParser(object):
         return self.user_data.get(PromptStore().first_token(),-1)
 
     def second_token(self):
-        first_token = self.first_token()
-        return {"x":"o","o":"x"}.get(first_token,-1)
+        return ti.other_token(self.first_token()) 
 
     def first_player(self):
         return self.user_data.get(PromptStore().player_string())

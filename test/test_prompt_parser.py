@@ -16,9 +16,6 @@ class PromptParserTokenTests(unittest.TestCase):
         user_data = {self.token_one_prompt: "o"}
         self.assertEqual("o",PromptParser(user_data).first_token())
 
-    def test_first_token_none(self):
-        self.assertEqual(-1,PromptParser({}).first_token())
-
     def test_second_token_x(self):
         user_data = {self.token_one_prompt:"o"}
         self.assertEqual("x",PromptParser(user_data).second_token())
@@ -26,9 +23,6 @@ class PromptParserTokenTests(unittest.TestCase):
     def test_second_token_o(self):
         user_data = {self.token_one_prompt:"x"}
         self.assertEqual("o",PromptParser(user_data).second_token())
-
-    def test_second_token_none(self):
-        self.assertEqual(-1,PromptParser({}).second_token())
 
 class PromptParserPlayerTests(unittest.TestCase):
 

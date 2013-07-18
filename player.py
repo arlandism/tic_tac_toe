@@ -1,10 +1,9 @@
 from printer import Printer
 from playerinput import InputValidator
 from prompter import Prompter
+from token_info import TokenInfo as ti
 
 class HumanPlayer(object):
-
-    PLAYERS_DICT = {'x':'o','o':'x'}
 
     def __init__(self,token,input_object=None,
                  display_object=None,prompter=None):
@@ -12,7 +11,7 @@ class HumanPlayer(object):
         if display_object is None:  display_object=Prompter()
         if prompter is None:  prompter=Prompter()
         self.token = token
-        self.opponent_token = (self.PLAYERS_DICT[token])
+        self.opponent_token = ti.other_token(self.token)
         self.input_object = input_object
         self.display_object = display_object
 

@@ -1,11 +1,10 @@
+from token_info import TokenInfo as ti
 
 class Minimax(object):
 
-  PLAYERS_DICT = {'x':'o','o':'x'}
-
   def __init__(self,token,max_depth):
       self.token = token
-      self.opponent_token = self.PLAYERS_DICT[self.token]
+      self.opponent_token = ti.other_token(self.token) 
       self.minimax_status = {"alpha":-1,"beta":1}
       self.MAX_DEPTH = max_depth
 
@@ -34,7 +33,7 @@ class Minimax(object):
           board.erase_move(space)
 
   def __alpha_beta_prune__(self, board, player,depth):
-      next_player = self.PLAYERS_DICT[player]
+      next_player = ti.other_token(player)
       if self.__comp_turn__(player):
           return self.__return_beta__(board,next_player,depth)
       else:
