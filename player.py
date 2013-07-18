@@ -1,4 +1,3 @@
-from printer import Printer
 from playerinput import InputValidator
 from prompter import Prompter
 from token_info import TokenInfo as ti
