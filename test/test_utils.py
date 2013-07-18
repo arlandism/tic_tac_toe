@@ -42,6 +42,18 @@ class FakePrinter(object):
 	      history_string = "".join(self.history)
 	      return history_string
 
+class MockPrompter(object):
+
+    def __init__(self,input_object,display_object):
+        self.input_object = input_object
+        self.display_object = display_object
+
+    def call(self):
+        self.input_object.call()
+
+    def display(self,x):
+        self.display_object.display(x)
+
 class FakeMinimax(object):
 
     def next_move(self,board):

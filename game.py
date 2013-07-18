@@ -12,25 +12,24 @@ class Game(object):
         self.player_one = player_one
         self.player_two = player_two
         self.display_object = display_object
-        self.display_method = display_object.display
         self.current_player = player_one
     
     def run(self):
         self.__introduction__()
         while not self.__over__():
             self.__round__()
-        self.display_method(self.board)
+        self.display_object.display(self.board)
         self.__print_winner__()
 
     def __print_winner__(self):
         if self.board.winner():
-            self.display_method(self.board.winner() + " wins")
+            self.display_object.display(self.board.winner() + " wins")
         else:
-            self.display_method("It's a tie.")
+            self.display_object.display("It's a tie.")
 
     def __introduction__(self):
-        self.display_method(BoardStringGenerator(self.board.board_index).example_board())
-        self.display_method("Type 'quit'and press Enter anytime to quit")
+        example_board = BoardStringGenerator(self.board.board_index).example_board()
+        self.display_object.display(example_board + "Type 'quit' and press Enter anytime to quit")
 
     def __round__(self):
         if not self.__over__():
@@ -41,7 +40,7 @@ class Game(object):
 
     def __print_board_if_game_not_over__(self):
         if not self.__over__():
-            self.display_method(self.board)
+            self.display_object.display(self.board)
 
     def __over__(self):
         return self.board.over() 
