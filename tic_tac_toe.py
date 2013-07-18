@@ -4,6 +4,6 @@ from prompt_parser import PromptParser
 
 if __name__ == "__main__":
     user_interface = UserInterface()
-    parser = PromptParser(user_interface.collected_data)
+    parser = PromptParser(user_interface.collected_data())
     game = GameBuilder.game(parser)
     game.run()
