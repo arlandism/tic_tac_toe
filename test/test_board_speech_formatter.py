@@ -1,5 +1,5 @@
 import unittest
-from board_speech_formatter import BoardSpeechFormatter,RowFormatter
+from board_speech_formatter import BoardSpeechFormatter,RowFormatter,SpeechFormatter
 from board_generator import BoardStringGenerator
 from base_board import BaseBoard
 
@@ -70,6 +70,21 @@ class BoardSpeechFormatterTests(unittest.TestCase):
         row_three = " row 3 empty  o  x"
         expected = (row_one + row_two + row_three)
         self.assertEqual(expected,self.formatter.format_for_speech(board_string))
+
+    def test_it_knows_board_string(self):
+        board_string = BoardStringGenerator(3).generate_template()
+        self.assertTrue(self.formatter.is_board_string(board_string))
+
+    def test_it_knows_non_board_string(self):
+        non_board_string = "X's turn"
+        self.assertFalse(self.formatter.is_board_string(non_board_string))
+
+class SpeechFormatterTests(unittest.TestCase):
+ 
+    def test_it_can_format_regular_strings(self):
+        reg_string = "whatup\n\n---"
+        self.assertEqual("whatup",SpeechFormatter.format_regular(reg_string))
+        
 
 class RowFormatterTests(unittest.TestCase):
 

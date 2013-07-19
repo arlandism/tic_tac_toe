@@ -1,6 +1,9 @@
+from board_generator import BoardStringGenerator
+
 class RowFormatter(object):
 
-    def space_out(self,row):
+    @staticmethod
+    def space_out(row):
         with_empties_spaced = row.replace("empty"," empty ")
         with_x_spaced = with_empties_spaced.replace("x"," x ")
         with_o_spaced = with_x_spaced.replace("o"," o ")
@@ -8,7 +11,8 @@ class RowFormatter(object):
         right_spacing_removed = left_spacing_removed.rstrip(" ")
         return right_spacing_removed 
     
-    def pad_row(self,index,row):
+    @staticmethod
+    def pad_row(index,row):
         if len(row) == 0:
             return index * " "
         if len(row) == index:
@@ -16,22 +20,39 @@ class RowFormatter(object):
         else:
             return row + (index - len(row)) * " "
 
-    def replace_with_empty(self,row_string):
+    @staticmethod
+    def replace_with_empty(row_string):
         return row_string.replace(" ","empty")
+
+class SpeechFormatter(object):
+
+    @staticmethod
+    def format_regular(string):
+        chars_removed = string.replace("-"," ").replace("'","").replace("\n"," ").replace("("," ").replace(")"," ")
+        return chars_removed.strip()
+
 
 class BoardSpeechFormatter(object):
 
     def __init__(self,index):
         self.index = index
 
-    def format_for_speech(self,string):
+    def format_for_speech(self,obj):
+        string = obj.__str__()
+        if self.is_board_string(string):
+            return self.format_board_for_speech(string)
+        else:
+            return SpeechFormatter.format_regular(string)
+
+    def format_board_for_speech(self,string):
         trimmed = self.trim_board(string)
         board_rows = self.rows(trimmed)
-        padded_rows = [RowFormatter().pad_row(self.index,row) for row in board_rows]
-        empties_added = [RowFormatter().replace_with_empty(row) for row in padded_rows]
-        spaced = [RowFormatter().space_out(row) for row in empties_added]
+        padded_rows = [RowFormatter.pad_row(self.index,row) for row in board_rows]
+        empties_added = [RowFormatter.replace_with_empty(row) for row in padded_rows]
+        spaced = [RowFormatter.space_out(row) for row in empties_added]
         row_nums_added = self.add_rows(spaced)
         return row_nums_added 
+
 
     def rows(self,board):
         row_list = []
@@ -56,3 +77,8 @@ class BoardSpeechFormatter(object):
             string.append(rows[row_num])
         return "".join(string)
 
+    def is_board_string(self,string):
+        min_num_dashes = BoardStringGenerator(3).generate_template().count("-") 
+        if min_num_dashes == string.count("-"): 
+            return True
+        return False

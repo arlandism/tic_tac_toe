@@ -16,10 +16,9 @@ class PlayerInitTests(unittest.TestCase):
         mock = SimpleMockPrompter([1])
         player = HumanPlayer("x",mock)
         player.next_move(BaseBoard(3))
-        available_moves = "Available moves are " + str(BaseBoard(3).available_moves())
-        move_prompt = "Please select a move: "
-        token_prompt = player.token.capitalize() + "'s turn"
+        available_moves = "\nAvailable moves are " + str(BaseBoard(3).available_moves())
+        move_prompt = "\nPlease select a move: "
+        token_prompt = player.token.capitalize() + " turn"
         prompts = [available_moves, move_prompt, token_prompt]
         for prompt in prompts:
             self.assertTrue(prompt in mock.history_string())
-

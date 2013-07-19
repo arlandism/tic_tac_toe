@@ -44,7 +44,7 @@ class PromptParserSecondPlayerTests(unittest.TestCase):
         self.assertEqual("ImpossibleAI",PromptParser(user_data).second_player())
 
     def test_second_player_human(self):
-        user_data = {"And the second... same options ":"Human"}
+        user_data = {PromptStore().second_player():"Human"}
         self.assertEqual("Human",PromptParser(user_data).second_player())
 
 class PromptParserBoardTests(unittest.TestCase):

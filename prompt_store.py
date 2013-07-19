@@ -13,11 +13,11 @@ class PromptStore(object):
     def player_string(self):
         return "The first player is a...\n" + "\n".join(self.player_choices) 
     def first_token(self):
-        return "What's the first player's token (x,o)? "
+        return "What's the first player's token (x or o)? "
 
     def second_player(self):
-        return "And the second... same options "
+        return "What kind of player will be moving second? "
 
     def board(self):
-        return "Board size please (3,4)"
+        return "Board size please (3 or 4)"
 

@@ -12,6 +12,6 @@ class ImpossibleAI(object):
 
     def next_move(self,board):
         move = self.minimax.next_move(board)
-        self.prompter.display(self.token.capitalize() + "'s turn" +
+        self.prompter.display(self.token.capitalize() + " turn\n" +
                                     self.token + " moves to " + str(move))
         return move

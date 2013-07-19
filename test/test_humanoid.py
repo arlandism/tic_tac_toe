@@ -48,6 +48,6 @@ class HumanoidNextMoveTests(unittest.TestCase):
         mock = self.prompter([1])
         humanoid = Humanoid("x",mock)
         humanoid.next_move(BaseBoard(3))
-        prompts = ["X's turn","Available moves are ","X moves to 1","Please select a move: "]
+        prompts = ["X turn","Available moves are ","X moves to 1","Please select a move: "]
         for prompt in prompts:
             self.assertTrue(prompt in mock.history_string())

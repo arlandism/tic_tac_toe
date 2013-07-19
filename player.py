@@ -11,7 +11,7 @@ class HumanPlayer(object):
 
     def next_move(self,board):
         moves = board.available_moves()
-        info_string = (self.token.capitalize() + "'s turn" + "\nPlease select a move: " +
+        info_string = (self.token.capitalize() + " turn" + "\nPlease select a move: " +
                        "\nAvailable moves are " + str(moves))
         self.prompter.display(info_string)
         move = InputValidator.return_valid_response(self.prompter, board.available_moves())

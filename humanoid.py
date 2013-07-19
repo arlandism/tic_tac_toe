@@ -13,7 +13,7 @@ class Humanoid(object):
         self.times_next_move_called = 0
 
     def next_move(self,board):
-        self.prompter.display(self.token.capitalize() + "'s turn")
+        self.prompter.display(self.token.capitalize() + " turn")
         self.times_next_move_called += 1
         if self.times_next_move_called < 3:
 	          move = self.__human_intervention__(board)
@@ -23,7 +23,7 @@ class Humanoid(object):
         return move
 
     def __human_intervention__(self,board):
-        move_string = ("Please select a move: " + "Available moves are " +
+        move_string = ("Please select a move: \n" + "Available moves are " +
                       str(board.available_moves()))
         self.prompter.display(move_string)
         move = InputValidator.return_valid_response(self.prompter,board.available_moves())

@@ -28,8 +28,9 @@ class Game(object):
             self.prompter.display("It's a tie.")
 
     def __introduction__(self):
-        example_board = BoardStringGenerator(self.board.board_index).example_board()
-        self.prompter.display(example_board + "\nType 'quit' and press Enter anytime to quit")
+        #won't work with formatter
+        #example_board = BoardStringGenerator(self.board.board_index).example_board()
+        self.prompter.display("\nType quit and press Enter anytime to quit")
 
     def __round__(self):
         if not self.__over__():

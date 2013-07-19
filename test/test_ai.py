@@ -13,7 +13,7 @@ class AiNextMoveTests(unittest.TestCase):
         board = BaseBoard(3)
         board.board_state = {1:"x",2:"x"}
         computer.next_move(board)
-        self.assertTrue("X's turn" in fake_printer.history_string())
+        self.assertTrue("X turn" in fake_printer.history_string())
         self.assertTrue("x moves to 3" in fake_printer.history_string())
 	
     def test_minimax_gets_called(self):

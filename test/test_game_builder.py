@@ -41,10 +41,3 @@ class GameBuilderTests(unittest.TestCase):
         parser = PromptParser(self.fake_data)
         game = GameBuilder.game(parser,prompter=printer)
         self.assertEqual(printer,game.player_one.prompter)
-
-
-
-
-
-
-         
