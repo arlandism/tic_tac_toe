@@ -71,8 +71,24 @@ class BoardSpeechFormatterTests(unittest.TestCase):
         expected = (row_one + row_two + row_three)
         self.assertEqual(expected,self.formatter.format_for_speech(board_string))
 
+    def test_format_for_speech_with_fours_board(self):
+        board = BaseBoard(4)
+        board.board_state = {1:"x", 8:"o", 9:"x"}
+        board_string = board.__str__()
+        row_one = " row 1 x  empty  empty  empty"
+        row_two = " row 2 empty  empty  empty  o"
+        row_three = " row 3 x  empty  empty  empty"
+        row_four = " row 4 empty  empty  empty  empty"
+        expected = (row_one + row_two + row_three + row_four)
+        self.assertTrue(self.fours_formatter.is_board_string(board_string))
+        self.assertEqual(expected,self.fours_formatter.format_for_speech(board_string))
+
     def test_it_knows_board_string(self):
         board_string = BoardStringGenerator(3).generate_template()
+        self.assertTrue(self.formatter.is_board_string(board_string))
+
+    def test_it_knows_fours_board_string(self):
+        board_string = BoardStringGenerator(4).generate_template()
         self.assertTrue(self.formatter.is_board_string(board_string))
 
     def test_it_knows_non_board_string(self):

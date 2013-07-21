@@ -79,6 +79,6 @@ class BoardSpeechFormatter(object):
 
     def is_board_string(self,string):
         min_num_dashes = BoardStringGenerator(3).generate_template().count("-") 
-        if min_num_dashes == string.count("-"): 
+        if min_num_dashes <= string.count("-"): 
             return True
         return False
