@@ -1,4 +1,5 @@
 import unittest
+from web_io_test_utils import MockSocket
 from socket_input import SocketInput
 
 class SocketInputTests(unittest.TestCase):
@@ -13,10 +14,3 @@ class SocketInputTests(unittest.TestCase):
         self.assertEqual('got some stuff', input_obj.call())
 
 
-class MockSocket(object):
-
-  def send_data(self):
-      return 'some stuff'
-
-  def receive_data(self):
-      return 'got some stuff'

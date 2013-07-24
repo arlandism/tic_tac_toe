@@ -31,7 +31,9 @@ class ClientSocketTests(unittest.TestCase):
         socket.send_data("test data")
         self.assertEqual("test data",server_client.recv(1024))
         self.assertTrue(socket.connected())
+        socket.close()
         server_client.close()
+        read_socket.close()
 
     def test_it_knows_when_connected(self):
         self.assertFalse(self.socket.connected())
@@ -67,3 +69,6 @@ class ServerSocket(object):
     def create_client(self):
         client, addr = self.socket.accept()
         return client
+
+    def close(self):
+        self.socket.close()
