@@ -31,7 +31,6 @@ class SpeechFormatter(object):
         chars_removed = string.replace("-"," ").replace("'","").replace("\n"," ").replace("("," ").replace(")"," ")
         return chars_removed.strip()
 
-
 class BoardSpeechFormatter(object):
 
     def __init__(self,index):
