@@ -27,13 +27,11 @@ class ClientSocketTests(unittest.TestCase):
         socket = Socket(HOST,PORT)
         read_socket = self.setUpServerSocket(HOST,PORT)
         socket.connect()
-        server_client = read_socket.create_client()
+        server_client = read_socket.accept_connection()
         socket.send_data("test data")
         self.assertEqual("test data",server_client.recv(1024))
         self.assertTrue(socket.connected())
-        socket.close()
-        server_client.close()
-        read_socket.close()
+        self.close_active_sockets(socket,server_client,read_socket)
 
     def test_it_knows_when_connected(self):
         self.assertFalse(self.socket.connected())
@@ -41,11 +39,16 @@ class ClientSocketTests(unittest.TestCase):
     def test_it_can_receive(self):
         server_socket = self.setUpServerSocket("localhost",5000)
         self.socket.connect()
-        server_client = server_socket.create_client()
+        server_client = server_socket.accept_connection()
         server_client.send("back at ya")
         self.socket.receive_data()
         self.assertEqual("back at ya", self.socket.data[0])
+        server_socket.close()
         server_client.close()
+
+    def close_active_sockets(self,*sockets):
+        for socket in sockets:
+            socket.close()
 
     def setUpServerSocket(self,host,port):
         read_socket = ServerSocket(host,port) 
@@ -66,7 +69,7 @@ class ServerSocket(object):
     def listen(self):
         self.socket.listen(1)
 
-    def create_client(self):
+    def accept_connection(self):
         client, addr = self.socket.accept()
         return client
 
