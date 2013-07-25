@@ -1,17 +1,20 @@
 import unittest
 import socket
+import time
+import random
 from client_socket import Socket 
 
 class ClientSocketTests(unittest.TestCase):
 
     def setUp(self):
-        self.socket = Socket()
+        valid_port = random.randrange(1024,65535)
+        self.socket = Socket(port=valid_port)
 
     def tearDown(self):
         self.socket.close()
 
     def test_it_defaults_with_port_and_host(self):
-        host, port = self.socket.addr_info()
+        host, port = Socket().addr_info()
         self.assertEqual("localhost",host)
         self.assertEqual(5000,port)
 
@@ -20,41 +23,35 @@ class ClientSocketTests(unittest.TestCase):
         host, port = socket.addr_info()
         self.assertEqual("other_host",host)
         self.assertEqual(3000,port)
+        self.close_active_sockets(socket)
 
-    def test_it_can_connect(self):
-        HOST = "localhost"
-        PORT = 34000
-        socket = Socket(HOST,PORT)
-        read_socket = self.setUpServerSocket(HOST,PORT)
-        socket.connect()
-        server_client = read_socket.accept_connection()
-        socket.send_data("test data")
-        self.assertEqual("test data",server_client.recv(1024))
-        self.assertTrue(socket.connected())
-        self.close_active_sockets(socket,server_client,read_socket)
-
-    def test_it_knows_when_connected(self):
-        self.assertFalse(self.socket.connected())
-
-    def test_it_can_receive(self):
-        server_socket = self.setUpServerSocket("localhost",5000)
+    def test_it_can_send_data(self):
+        host, port = self.socket.addr_info()
+        server_socket = self.setUpServerSocket(host,port)
         self.socket.connect()
-        server_client = server_socket.accept_connection()
-        server_client.send("back at ya")
+        server_connection_socket = server_socket.accept_connection_and_return_socket()
+        self.socket.send_data("test data")
+        self.assertEqual("test data",server_connection_socket.recv(1024))
+        self.close_active_sockets(server_socket,server_connection_socket)
+
+    def test_it_can_receive_data(self):
+        host, port = self.socket.addr_info()
+        server_socket = self.setUpServerSocket(host,port)
+        self.socket.connect()
+        server_connection_socket = server_socket.accept_connection_and_return_socket()
+        server_connection_socket.send("back at ya")
         self.socket.receive_data()
         self.assertEqual("back at ya", self.socket.data[0])
-        server_socket.close()
-        server_client.close()
+        self.close_active_sockets(server_socket,server_connection_socket)
 
     def close_active_sockets(self,*sockets):
         for socket in sockets:
             socket.close()
 
     def setUpServerSocket(self,host,port):
-        read_socket = ServerSocket(host,port) 
-        read_socket.bind()
-        read_socket.listen()
-        return read_socket
+        server_socket = ServerSocket(host,port)
+        server_socket.initialize_and_listen_for_connections()
+        return server_socket
 
 class ServerSocket(object):
 
@@ -69,9 +66,13 @@ class ServerSocket(object):
     def listen(self):
         self.socket.listen(1)
 
-    def accept_connection(self):
+    def accept_connection_and_return_socket(self):
         client, addr = self.socket.accept()
         return client
+
+    def initialize_and_listen_for_connections(self):
+        self.socket.bind((self.host,self.port))
+        self.socket.listen(1)
 
     def close(self):
         self.socket.close()
