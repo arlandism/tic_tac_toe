@@ -3,18 +3,23 @@ import json
 class HashTransformer(object):
 
       @staticmethod
-      def dict_keys_to_ints(dictionary):
+      def try_dict_key_conversion(dictionary):
           new_dict = {}
           try:
             for key,val in dictionary.items():
-                try:
-                    new_key = int(key)
-                except:
-                    new_key = key
+                new_key = HashTransformer.try_int_conversion(key)
                 new_dict[new_key] = val
             return  new_dict
           except:
               return dictionary
+
+      @staticmethod
+      def try_int_conversion(key):
+          try:
+              key = int(key)
+          except:
+              pass
+          return key
 
 class JsonTransmitter(object):
 
@@ -29,4 +34,4 @@ class JsonTransmitter(object):
       jsonified = self.socket.recv(4096)
       jsonified = jsonified.replace("\n","")
       dejsonified = json.loads(jsonified)
-      return HashTransformer.dict_keys_to_ints(dejsonified) 
+      return HashTransformer.try_dict_key_conversion(dejsonified) 

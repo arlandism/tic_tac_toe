@@ -45,7 +45,7 @@ class HashTransformerTests(unittest.TestCase):
         self.transformer = json_transmitter.HashTransformer
 
     def assertTransformerWorks(self,dictionary,expected):
-        self.assertEqual(expected,self.transformer.dict_keys_to_ints(dictionary))
+        self.assertEqual(expected,self.transformer.try_dict_key_conversion(dictionary))
 
     def test_it_turns_hash_str_keys_to_ints(self):
         self.assertTransformerWorks( {"1":"x"}, {1:"x"} )
