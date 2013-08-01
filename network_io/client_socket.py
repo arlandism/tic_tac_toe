@@ -20,13 +20,11 @@ class Socket(object):
         self.socket.send(to_send)
 
     def receive_data(self):
-        while True:
-            data = self.socket.recv(4096)
-            if data == " ":
-                self.is_connected = False
-                break
-            else:
-                self.data.append(data)
+        data = self.socket.recv(4096)
+        if data == "":
+            self.is_connected = False
+        else:
+            self.data.append(data)
 
     def connected(self):
         return self.is_connected

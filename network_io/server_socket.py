@@ -8,12 +8,6 @@ class ServerSocket(object):
         self.socket = socket.socket()
         self.client = None
 
-    def bind(self):
-        self.socket.bind((self.host,self.port))
-
-    def listen(self):
-        self.socket.listen(1)
-
     def accept_connection_and_return_socket(self):
         client, addr = self.socket.accept()
         self.client = client

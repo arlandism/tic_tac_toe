@@ -1,5 +1,4 @@
 import unittest
-import socket
 import random
 from server_socket import ServerSocket
 from client_socket import Socket 
@@ -30,8 +29,10 @@ class ConnectionTests(unittest.TestCase):
         self.client_socket.receive_data()
         self.assertEqual("back at ya", self.client_socket.data[0])
 
-    def test_is_connected_knows_when_connection_closes(self):
-        pass
+    def test_socket_knows_when_other_side_hangs_up(self):
+        self.connect_client_and_build_connection_socket()
+        self.assertTrue(self.client_socket.connected())
+        self.connection_socket.send("")
 
     def setUp(self):
         valid_port = random.randrange(1024,65535)
