@@ -1,4 +1,3 @@
-from player import HumanPlayer
 from collections import OrderedDict
 
 class MockUserInput(object):
@@ -36,10 +35,6 @@ class SimpleMockPrompter(object):
     def history_string(self):
         return "".join(self.history)
 
-class MockPlayer(HumanPlayer):
-
-    def __init__(self,token,fake_input):
-        super(MockPlayer,self).__init__(token,fake_input)
 
 class FakePrinter(object):
 
@@ -112,8 +107,4 @@ class MockParser(object):
 
         return self.gameboard.size
 
-class MockFactory(object):
 
-   @staticmethod
-   def player(player_type,token,display_object=None):
-       return player_type

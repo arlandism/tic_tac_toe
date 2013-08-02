@@ -1,6 +1,7 @@
 import unittest
 import json
 import json_transmitter
+from web_io_test_utils import MockSocket
 
 class JsonTransmitterTests(unittest.TestCase):
 
@@ -65,27 +66,8 @@ class JsonTransmitterAndHashTransformerIntegrationTests(unittest.TestCase):
         mock = MockSocket()
         transmitter = json_transmitter.JsonTransmitter(mock)
         useful = {"token_one":"x","token_two":"o","player_one":"human",
-                   "player_two":"computer", "board_size": 4, "difficulty":"impossible",
-                    4:"x", 7:"o"}
+                  "player_two":"computer", "board_size": 4, "difficulty":"impossible",
+                  4:"x", 7:"o"}
         useless = json.dumps(useful)
         mock.add_to_receive_stack(useless)
         self.assertEqual(useful,transmitter.receive())
-
-class MockSocket(object):
-    
-    def __init__(self):
-        self.send_called = False
-        self.receive_called = False
-        self.send_args = []
-        self.to_receive = []
-
-    def send(self,string):
-        self.send_args.append(string)
-        self.send_called = True
-
-    def recv(self,byte_length):
-        self.receive_called = True
-        return self.to_receive.pop() 
-
-    def add_to_receive_stack(self,to_add):
-        self.to_receive.append(to_add)
