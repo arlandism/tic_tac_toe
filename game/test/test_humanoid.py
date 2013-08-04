@@ -24,23 +24,14 @@ class HumanoidNextMoveTests(unittest.TestCase):
         self.assertEqual(1,player.next_move(self.board))
         self.assertEqual(2,player.next_move(self.board))
 
-    def test_gets_minimax(self):
-        mock = self.prompter([1,2,5])
-        player = Humanoid("x",self.prompter([1,2,5]),
-        minimax=FakeMinimax())
-        for i in range(3):
-            player.next_move(self.board)
+    def test_calls_minimax_after_third_move(self):
+        player = Humanoid("x",minimax=FakeMinimax(["next move"]))
+        player.times_next_move_called = 3
         self.assertEqual("next move", player.next_move(self.board))
 
-    def test_third_move_is_ai(self):
-        mock = self.prompter([1,7])
-        player = Humanoid("x",mock)
-        self.board.board_state = {4:"o", 5:"o"}
-        self.assertEqual(1,player.next_move(self.board))
-
-        self.board.board_state = {1:"x", 4:"o", 5:"o"}
-        self.assertEqual(7,player.next_move(self.board))
-
+    def test_default_minimax_is_impossible_level(self):
+        player = Humanoid("x")
+        player.times_next_move_called = 3
         self.board.board_state = {1:"x", 4:"o", 5:"o", 7:"x"}
         self.assertEqual(6,player.next_move(self.board))
                          
@@ -48,6 +39,6 @@ class HumanoidNextMoveTests(unittest.TestCase):
         mock = self.prompter([1])
         humanoid = Humanoid("x",mock)
         humanoid.next_move(BaseBoard(3))
-        prompts = ["X turn","Available moves are ","X moves to 1","Please select a move: "]
+        prompts = [humanoid.turn_prompt(),"Available moves are ",humanoid.move_prompt(),"Please select a move: "]
         for prompt in prompts:
             self.assertTrue(prompt in mock.history_string())

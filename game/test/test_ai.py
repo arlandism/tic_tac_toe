@@ -3,7 +3,7 @@ import unittest
 from game.base_board import BaseBoard
 from test.test_utils import FakePrinter, FakeMinimax
 
-from game.ai import *
+from game.ai import ImpossibleAI
 
 class AiNextMoveTests(unittest.TestCase):
 
@@ -17,6 +17,6 @@ class AiNextMoveTests(unittest.TestCase):
         self.assertTrue("x moves to 3" in fake_printer.history_string())
 	
     def test_minimax_gets_called(self):
-        computer = ImpossibleAI("x",minimax=FakeMinimax())
+        computer = ImpossibleAI("x",minimax=FakeMinimax(["next move"]))
         self.assertEqual("next move",computer.next_move(BaseBoard(3)))
 
