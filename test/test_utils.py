@@ -1,5 +1,3 @@
-from collections import OrderedDict
-
 class MockUserInput(object):
 
     def __init__(self,vals):
@@ -104,7 +102,4 @@ class MockParser(object):
 
     def board_size(self):
         return self.user_data["board"] 
-
         return self.gameboard.size
-
-

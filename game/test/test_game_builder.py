@@ -2,7 +2,6 @@ import unittest
 
 from game.game_builder import GameBuilder
 from game.game import Game
-from game.player import HumanPlayer
 from io.prompt_parser import PromptParser
 from io.prompt_store import PromptStore
 

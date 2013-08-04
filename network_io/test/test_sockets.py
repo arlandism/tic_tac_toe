@@ -2,6 +2,7 @@ import unittest
 import random
 from server_socket import ServerSocket
 from client_socket import Socket 
+from json_transmitter import JsonTransmitter
 
 class ClientInitTests(unittest.TestCase):
 

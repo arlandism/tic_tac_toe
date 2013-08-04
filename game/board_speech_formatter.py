@@ -28,8 +28,13 @@ class SpeechFormatter(object):
 
     @staticmethod
     def format_regular(string):
-        chars_removed = string.replace("-"," ").replace("'","").replace("\n"," ").replace("("," ").replace(")"," ")
-        return chars_removed.strip()
+        no_dashes = string.replace("-"," ")
+        no_single_quotes = no_dashes.replace("'","")
+        no_newlines = no_single_quotes.replace("\n"," ")
+        no_left_parens = no_newlines.replace("("," ")
+        no_right_parens = no_left_parens.replace(")"," ")
+        string_with_junk_removed = no_right_parens.strip()
+        return string_with_junk_removed
 
 class BoardSpeechFormatter(object):
 
@@ -51,7 +56,6 @@ class BoardSpeechFormatter(object):
         spaced = [RowFormatter.space_out(row) for row in empties_added]
         row_nums_added = self.add_rows(spaced)
         return row_nums_added 
-
 
     def rows(self,board):
         row_list = []

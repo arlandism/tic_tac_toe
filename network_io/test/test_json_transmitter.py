@@ -3,6 +3,8 @@ import json
 import json_transmitter
 from web_io_test_utils import MockSocket
 
+EOF = "\r\n"
+
 class JsonTransmitterTests(unittest.TestCase):
 
     def setUp(self):
@@ -20,13 +22,13 @@ class JsonTransmitterTests(unittest.TestCase):
         jsonified = json.dumps(message)
         self.transmitter.send(message)
         self.assertTrue(self.mock.send_called)
-        self.assertEqual(jsonified,self.last_sent_arg())
+        self.assertEqual(jsonified + EOF,self.last_sent_arg())
 
     def test_it_jsonifies_nums_before_sending(self):
         num = 3
         jsonified = json.dumps(num)
         self.transmitter.send(num)
-        self.assertEqual(jsonified,self.last_sent_arg())
+        self.assertEqual(jsonified + EOF,self.last_sent_arg())
 
     def test_it_decodes_json_upon_receipt(self):
         decoded = "message"
@@ -65,9 +67,15 @@ class JsonTransmitterAndHashTransformerIntegrationTests(unittest.TestCase):
     def test_some_json_encoded_stuff_goes_in_and_useful_stuff_comes_out(self):
         mock = MockSocket()
         transmitter = json_transmitter.JsonTransmitter(mock)
-        useful = {"token_one":"x","token_two":"o","player_one":"human",
-                  "player_two":"computer", "board_size": 4, "difficulty":"impossible",
-                  4:"x", 7:"o"}
+        useful = {
+            "token_one":"x",
+            "token_two":"o",
+            "player_one":"human",
+            "player_two":"computer",
+            "board_size": 4,
+            "difficulty":"impossible",
+            "board" : {4:"x", 7:"o"}
+          }
         useless = json.dumps(useful)
         mock.add_to_receive_stack(useless)
         self.assertEqual(useful,transmitter.receive())

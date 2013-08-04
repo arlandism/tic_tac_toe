@@ -27,11 +27,11 @@ class MockBoard(object):
 
 class MockTransmitter(object):
 
-  def __init__(self,socket):
+  def __init__(self, responses):
       self.times_sent_called = 0
       self.times_receive_called = 0
       self.send_args = []
-      self.receive
+      self.responses = responses
 
   def send(self,to_send):
       self.times_sent_called += 1
@@ -39,6 +39,7 @@ class MockTransmitter(object):
 
   def receive(self):
       self.times_receive_called += 1
+      return self.responses.pop(0)
 
 class MockServer(object):
 

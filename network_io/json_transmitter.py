@@ -28,7 +28,7 @@ class JsonTransmitter(object):
 
   def send(self,message):
       message = json.dumps(message) 
-      self.socket.send(message)
+      self.socket.send(message + "\r\n")
 
   def receive(self):
       jsonified = self.socket.recv(4096)
