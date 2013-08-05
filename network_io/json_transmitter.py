@@ -21,14 +21,20 @@ class HashTransformer(object):
               pass
           return key
 
+      @staticmethod
+      def is_terminal(thing):
+          return False
+
 class JsonTransmitter(object):
+
+  END_MSG = "\r\n"
 
   def __init__(self,socket):
       self.socket = socket
 
   def send(self,message):
       message = json.dumps(message) 
-      self.socket.send(message + "\r\n")
+      self.socket.send(message + self.END_MSG) 
 
   def receive(self):
       jsonified = self.socket.recv(4096)
