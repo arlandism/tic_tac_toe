@@ -62,6 +62,19 @@ class HashTransformerTests(unittest.TestCase):
     def test_on_empty_hashes(self):
         self.assertTransformerWorks( {}, {} )
 
+    def test_it_knows_leaves(self):
+        moves = {5:"o", 6:"x"}
+        self.assertTrue(self.transformer.is_terminal(moves,5))
+
+    def test_it_know_branches(self):
+        hash_ception = {"board": {1:"x", 3:"o"}}
+        self.assertFalse(self.transformer.is_terminal(hash_ception,"board"))
+
+    def test_it_converts_nested_hashes(self):
+        hash_ception = {"1": {"3":"x", "5":"o"}}
+        actual = self.transformer.try_dict_key_conversion(hash_ception)
+        self.assertEqual( {1:{3:"x",5:"o"}}, actual)
+
 class JsonTransmitterAndHashTransformerIntegrationTests(unittest.TestCase):
       
     def test_some_json_encoded_stuff_goes_in_and_useful_stuff_comes_out(self):
