@@ -57,8 +57,13 @@ class FakePrinter(object):
 
 class FakeMinimax(object):
 
+    def __init__(self,args_to_call=None):
+        if args_to_call is None:
+            args_to_call = ["next move"]
+        self.args_to_call = args_to_call
+
     def next_move(self,board):
-        return "next move"
+        return self.args_to_call.pop(0)
 
 class MockPrompter(object):
 
