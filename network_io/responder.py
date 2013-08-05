@@ -5,11 +5,18 @@ from game.base_board import BaseBoard
 
 class MoveGenerator(object):
 
+    def __init__(self,board=None,minimax=None):
+        if board is None:  board = BaseBoard(3)
+        if minimax is None:  minimax = Minimax("o",20)
+        self.board = board
+        self.minimax = minimax
+
     def next_move(self,board_state):
-        computer = Minimax("o",20)
-        board = BaseBoard(3)
-        board.board_state = board_state
-        return computer.next_move(board) 
+        self.board.board_state = board_state
+        return self.minimax.next_move(self.board)
+
+    def winner(self):
+        return self.board.winner()
 
 class Responder(object):
   
