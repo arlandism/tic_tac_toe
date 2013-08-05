@@ -29,6 +29,7 @@ class Responder(object):
         transmitter_data = self.transmitter.receive()
         comp_move = self.ai_move(transmitter_data)
         self.transmitter.send(comp_move)
+        self.transmitter.send(self.generator.winner())
 
     def ai_move(self, board_state):
         move_from_generator = self.generator.next_move(board_state)
