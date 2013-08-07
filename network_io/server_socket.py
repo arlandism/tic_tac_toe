@@ -1,5 +1,4 @@
 import socket
-from json_transmitter import JsonTransmitter
 
 class ServerSocket(object):
 
@@ -20,8 +19,3 @@ class ServerSocket(object):
     def initialize_and_listen_for_connections(self):
         self.socket.bind((self.host,self.port))
         self.socket.listen(1)
-
-    def close(self):
-        self.socket.close()
-
-
