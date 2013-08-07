@@ -11,6 +11,8 @@ class ImpossibleAI(object):
         self.prompter = prompter
 
     def next_move(self,board):
+        if board.over():
+            return None
         move = self.minimax.next_move(board)
         self.prompter.display(self.turn_prompt() +
                               self.move_prompt() + 
