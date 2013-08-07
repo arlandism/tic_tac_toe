@@ -13,7 +13,9 @@ class MoveGenerator(object):
 
     def next_move(self,board_state):
         self.board.board_state = board_state
-        return self.minimax.next_move(self.board)
+        comp_move = self.minimax.next_move(self.board)
+        self.board.board_state[comp_move] = self.minimax.token
+        return comp_move
 
     def winner(self):
         return self.board.winner()
@@ -28,8 +30,9 @@ class Responder(object):
     def respond(self):
         transmitter_data = self.transmitter.receive()
         comp_move = self.ai_move(transmitter_data)
+        winner = self.generator.winner()
         self.transmitter.send(comp_move)
-        self.transmitter.send(self.generator.winner())
+        self.transmitter.send(winner)
 
     def ai_move(self, board_state):
         move_from_generator = self.generator.next_move(board_state)
