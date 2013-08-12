@@ -1,5 +1,5 @@
 import os
-from game.board_speech_formatter import BoardSpeechFormatter
+from board_speech_formatter import BoardSpeechFormatter
 
 class AudioOutput(object):
 
