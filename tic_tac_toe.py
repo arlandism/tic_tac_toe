@@ -3,7 +3,7 @@ from game.game_builder import GameBuilder
 from io.prompt_parser import PromptParser
 from io.prompter import Prompter
 from io.speech_output import AudioOutput
-from  game.board_speech_formatter import BoardSpeechFormatter
+from  io.board_speech_formatter import BoardSpeechFormatter
 import getopt   
 import sys
 
