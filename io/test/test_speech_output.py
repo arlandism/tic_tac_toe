@@ -1,6 +1,6 @@
 import unittest
 
-from game.board_speech_formatter import BoardSpeechFormatter, SpeechFormatter
+from io.board_speech_formatter import BoardSpeechFormatter, SpeechFormatter
 from io.speech_output import AudioOutput
 
 class AudioOutputTests(unittest.TestCase):
