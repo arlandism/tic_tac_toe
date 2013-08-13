@@ -22,7 +22,16 @@ class ResponderIntegrationTests(unittest.TestCase):
           responder = Responder(transmitter,generator)
           responder.respond()
           transmitter.send.assert_any_call(3)
-        
+
+      def test_returns_correct_move_with_buggy_sequence(self):
+          board = {9:"x", 6:"x", 5:"o"}
+          transmitter = mock.Mock()
+          transmitter.receive = mock.MagicMock(return_value=board)
+          generator = MoveGenerator()
+          responder = Responder(transmitter,generator)
+          responder.respond()
+          transmitter.send.assert_any_call(3)
+
 class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 
       def test_board_gets_updated_and_shows_win(self):
