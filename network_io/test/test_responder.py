@@ -4,37 +4,34 @@ from responder import Responder, MoveGenerator
 
 class ResponderTests(unittest.TestCase):
 
+    def setUp(self):
+        self.transmitter = mock.Mock()
+        self.generator = mock.Mock()
+
     def test_responds_got_something(self):
-        transmitter = mock.Mock()
-        transmitter.receive = mock.MagicMock()
-        responder = Responder(transmitter,mock.Mock())
+        self.transmitter.receive = mock.MagicMock()
+        responder = Responder(self.transmitter,mock.Mock())
         responder.respond()
-        self.assertEqual(1,transmitter.receive.call_count)
+        self.assertEqual(1,self.transmitter.receive.call_count)
 
     def test_respond_sent_something(self):
-        transmitter = mock.Mock()
-        transmitter.send = mock.MagicMock()
-        generator = mock.Mock()
-        responder = Responder(transmitter,generator)
+        self.transmitter.send = mock.MagicMock()
+        responder = Responder(self.transmitter,self.generator)
         responder.respond()
-        self.assertEqual(2,transmitter.send.call_count)
+        self.assertEqual(2,self.transmitter.send.call_count)
 
     def test_respond_sends_next_move_from_generator(self):
-        transmitter = mock.Mock()
-        generator = mock.Mock()
-        generator.winner = mock.MagicMock(return_value=None)
-        generator.next_move = mock.MagicMock(return_value=3)
-        responder = Responder(transmitter,generator)
+        self.generator.winner = mock.MagicMock(return_value=None)
+        self.generator.next_move = mock.MagicMock(return_value=3)
+        responder = Responder(self.transmitter,self.generator)
         responder.respond() 
-        transmitter.send.assert_any_call(3)
+        self.transmitter.send.assert_any_call(3)
          
     def test_respond_sends_generator_winner(self):
-        transmitter = mock.Mock() 
-        generator = mock.Mock()
-        generator.winner = mock.MagicMock(return_value="x")
-        responder = Responder(transmitter, generator)
+        self.generator.winner = mock.MagicMock(return_value="x")
+        responder = Responder(self.transmitter, self.generator)
         responder.respond()
-        transmitter.send.assert_called_with("x") 
+        self.transmitter.send.assert_called_with("x") 
 
 class MoveGeneratorTests(unittest.TestCase):
 
@@ -65,3 +62,14 @@ class MoveGeneratorTests(unittest.TestCase):
         generator = MoveGenerator(minimax=fake_ai)
         actual_move = generator.next_move({})
         self.assertEqual(99,actual_move)
+
+    def test_generator_calls_winner_when_expected(self):
+        generator = MoveGenerator()
+        board_state = {9:"x", 5:"o", 6:"x"}
+        self.assertEqual(3, generator.next_move(board_state))
+        self.assertEqual(None,generator.winner())
+
+    def test_generator_with_buggy_move_sequence(self):
+        generator = MoveGenerator()
+        board_state = {9:"x", 5:"o", 6:"x"}
+        self.assertEqual(3,generator.next_move(board_state))
