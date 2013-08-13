@@ -17,7 +17,6 @@ class HashTransformer(object):
           except:
               return dictionary
 
-
       @staticmethod
       def try_int_conversion(key):
           try:
