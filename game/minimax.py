@@ -9,14 +9,17 @@ class Minimax(object):
       self.MAX_DEPTH = max_depth
 
   def next_move(self,board):
-      if board.state() == {}:
+      if board.over():
+          return None
+      elif board.state() == {}:
           return board.keys[-1] 
-      score_and_move_list = self.__build_score_and_move_list__(board)
-      if score_and_move_list:
-          best_score_and_move_list = max(score_and_move_list)
-          MOVE_INDEX = -1
-          best_move = best_score_and_move_list[MOVE_INDEX] 
-          return best_move
+      else:
+        score_and_move_list = self.__build_score_and_move_list__(board)
+        if score_and_move_list:
+            best_score_and_move_list = max(score_and_move_list)
+            MOVE_INDEX = -1
+            best_move = best_score_and_move_list[MOVE_INDEX] 
+            return best_move
 
   def __build_score_and_move_list__(self,board):
       possible_moves = board.available_moves()
