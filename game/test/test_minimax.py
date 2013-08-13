@@ -17,10 +17,18 @@ class MinimaxNextMoveTests(unittest.TestCase):
         self.board.board_state = {1:"o", 2:"o", 4:"x", 5:"x"} 
         self.assertEqual(3,self.o_minimax.next_move(self.board))
 
+    def test_when_returns_eight(self):
+        self.board.board_state = {9:"x", 5:"o"} 
+        self.assertEqual(8,self.o_minimax.next_move(self.board))
+
     def test_minimax_move_defense(self):
         computer = self.o_minimax
         self.board.board_state = {1:"o", 5:"x", 9:"x"}
         self.assertTrue(self.o_minimax.next_move(self.board) in (3,7))
+
+    def test_that_it_prevents_win(self):
+        self.board.board_state = {9:"x", 5:"o", 6:"x"}
+        self.assertEqual(3,self.o_minimax.next_move(self.board))
 
     def test_minimax_goes_for_fastest_win(self):
         self.board.board_state = {1:"x", 2:"x"}
@@ -50,4 +58,3 @@ class MinimaxNextMoveTests(unittest.TestCase):
         board = BaseBoard(2)
         board.board_state = {1:"x",3:"shoe",4:"moo"}
         self.assertEqual(2,self.x_minimax.next_move(board))
-
