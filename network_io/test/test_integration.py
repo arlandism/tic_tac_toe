@@ -58,11 +58,13 @@ class HighLevelResponderTests(unittest.TestCase):
           self.sock.send(to_send)
           responder.respond()
           comp_move = self.sock.recv(1024)
-          winner_status = self.sock.recv(1024)
+          winner = self.sock.recv(1024)
 
           END_MSG_TERM  = "\r\n"
-          self.assertEqual(json.dumps(2) + END_MSG_TERM,comp_move)
-          self.assertEqual(json.dumps("o") + END_MSG_TERM, winner_status)
+          WIN_MOVE = 2
+          expected_move = json.dumps(WIN_MOVE) + END_MSG_TERM
+          self.assertEqual(expected_move,comp_move)
+          self.assertEqual(json.dumps("o") + END_MSG_TERM, winner)
           
       def setUp(self):
           PORT = random.randint(2000,60000)
