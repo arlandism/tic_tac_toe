@@ -50,4 +50,8 @@ class BaseBoard(object):
         del self.board_state[move]
 
     def state(self):
-        return self.board_state
+        current_state = {}
+        for key in self.board_state:
+            if key in self.keys:
+              current_state[key] = self.board_state[key]
+        return current_state
