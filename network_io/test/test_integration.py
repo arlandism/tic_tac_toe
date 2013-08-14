@@ -45,24 +45,29 @@ class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 class HighLevelResponderTests(unittest.TestCase):
 
       def test_it_hooks_into_socket_sends_and_receives(self):
-          PORT = random.randint(2000,60000)
-          server = ServerSocket("localhost",PORT)
-          server.initialize_and_listen_for_connections()
-          sock = socket.socket() 
-          sock.connect(("localhost",PORT))
-          connection_socket = server.accept_connection_and_return_socket()
-          transmitter = JsonTransmitter(connection_socket)
+          transmitter = JsonTransmitter(self.connection_socket)
           responder = Responder(transmitter)
 
           to_send = json.dumps({1:"o",3:"o"})
-          sock.send(to_send)
+          self.sock.send(to_send)
           responder.respond()
-          comp_move = sock.recv(1024)
-          winner_status = sock.recv(1024)
+          comp_move = self.sock.recv(1024)
+          winner_status = self.sock.recv(1024)
 
           END_MSG_TERM  = "\r\n"
           self.assertEqual(json.dumps(2) + END_MSG_TERM,comp_move)
           self.assertEqual(json.dumps("o") + END_MSG_TERM, winner_status)
           
-          sock.close()
-          connection_socket.close()
+      def setUp(self):
+          PORT = random.randint(2000,60000)
+          self.server = ServerSocket("localhost",PORT)
+          self.server.initialize_and_listen_for_connections()
+          self.sock = socket.socket()
+          self.sock.connect(("localhost",PORT))
+          self.connection_socket = self.server.accept_connection_and_return_socket()
+
+      def tearDown(self):
+          self.sock.close()
+          self.connection_socket.close()
+
+
