@@ -14,11 +14,11 @@ class Minimax(object):
       elif board.state() == {}:
           return board.keys[-1] 
       else:
-        score_and_move_list = self.__build_score_and_move_list__(board)
-        best_score_and_move_list = max(score_and_move_list)
-        MOVE_INDEX = -1
-        best_move = best_score_and_move_list[MOVE_INDEX] 
-        return best_move
+          score_and_move_list = self.__build_score_and_move_list__(board)
+          best_score_and_move_list = max(score_and_move_list)
+          MOVE_INDEX = -1
+          best_move = best_score_and_move_list[MOVE_INDEX] 
+          return best_move
 
   def __build_score_and_move_list__(self,board):
       possible_moves = board.available_moves()
