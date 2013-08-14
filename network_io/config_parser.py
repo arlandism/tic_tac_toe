@@ -4,17 +4,31 @@ class ConfigParser(object):
     def __init__(self,file_to_parse):
         self.to_parse = file_to_parse
          
-    def token(self):
-        return self.__find_it("token")
+    def first_token(self):
+        found = self.__find_it("first_token")
+        return self.__found_or_default(found,"x")
 
     def player_one(self):
-        return self.__find_it("player_one")
+        found = self.__find_it("player_one") 
+        return self.__found_or_default(found,"Human")
 
     def player_two(self):
-        return self.__find_it("player_two")
+        found =  self.__find_it("player_two")
+        return self.__found_or_default(found,"ImpossibleAI")
 
     def difficulty(self):
-        return int(self.__find_it("depthlimit"))
+        found = self.__find_it("depthlimit")
+        return int(self.__found_or_default(found,20))
+
+    def board_size(self):
+        found = self.__find_it("board_size")
+        return int(self.__found_or_default(found,3))
+
+    def __found_or_default(self,found,default):
+        if found:
+            return found
+        else:
+            return default
         
     def __find_it(self,to_find):
         PREFIX_LEN = len(to_find) + len(": ")
