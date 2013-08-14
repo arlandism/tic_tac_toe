@@ -6,7 +6,7 @@ class ConfigParserTests(unittest.TestCase):
     fake_config_file = ("token: test_token\n" +
                         "player_one: test_player_one\n" +
                         "player_two: test_player_two\n" +
-                        "difficulty: juggernaut\n")
+                        "depthlimit: 100\n")
 
     def setUp(self):
         self.parser= ConfigParser(self.fake_config_file)
@@ -25,4 +25,4 @@ class ConfigParserTests(unittest.TestCase):
 
     def test_reads_from_input_for_difficulty(self):
         difficulty = self.parser.difficulty()
-        self.assertEqual("juggernaut",difficulty)
+        self.assertEqual(100,difficulty)
