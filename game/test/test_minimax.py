@@ -34,6 +34,10 @@ class MinimaxNextMoveTests(unittest.TestCase):
         self.board.board_state = {1:"x", 2:"x"}
         self.assertEqual(3,self.x_minimax.next_move(self.board))
 
+    def test_that_it_handles_junk_boards(self):
+        self.board.board_state = {0:"", 5:"o", 6:"x", 9:"x"}
+        self.assertEqual(3, self.o_minimax.next_move(self.board))
+
     def test_that_it_counters(self):
         self.board.board_state = {1:"x",2:"x"}
         self.assertEqual(3,self.o_minimax.next_move(self.board))
