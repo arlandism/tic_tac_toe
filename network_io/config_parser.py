@@ -14,7 +14,7 @@ class ConfigParser(object):
         return self.__find_it("player_two")
 
     def difficulty(self):
-        return self.__find_it("difficulty")
+        return int(self.__find_it("depthlimit"))
         
     def __find_it(self,to_find):
         PREFIX_LEN = len(to_find) + len(": ")
