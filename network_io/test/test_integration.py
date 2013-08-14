@@ -7,8 +7,10 @@ import mock
 
 sys.path.append("../")
 from game.base_board import BaseBoard
+from game.minimax import Minimax
 from server_socket import ServerSocket
 from json_transmitter import JsonTransmitter
+from config_parser import ConfigParser
 from responder import Responder, MoveGenerator
 
 class ResponderIntegrationTests(unittest.TestCase):
@@ -45,8 +47,12 @@ class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 class HighLevelResponderTests(unittest.TestCase):
 
       def test_it_hooks_into_socket_sends_and_receives(self):
+          config_file = open("test.yml").read()
+          config_parser = ConfigParser(config_file)
           transmitter = JsonTransmitter(self.connection_socket)
-          responder = Responder(transmitter)
+          minimax = Minimax("o",config_parser.difficulty())
+          generator = MoveGenerator(minimax=minimax)
+          responder = Responder(transmitter,generator)
 
           to_send = json.dumps({1:"o",3:"o"})
           self.sock.send(to_send)
@@ -69,5 +75,3 @@ class HighLevelResponderTests(unittest.TestCase):
       def tearDown(self):
           self.sock.close()
           self.connection_socket.close()
-
-
