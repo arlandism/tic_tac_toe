@@ -7,6 +7,12 @@ class BaseBoardTests(unittest.TestCase):
     def test_if_new_board_is_empty_dict(self):
         self.assertEqual(dict(),BaseBoard(3).state())
 
+    def test_state_returns_only_non_junk(self):
+        garbage_state = {0:"", 5:"o", 6:"x", 9:"x"}
+        board = BaseBoard(3)
+        board.board_state = garbage_state
+        self.assertEqual( {5:"o", 6:"x", 9:"x"}, board.state())
+
     def test_make_move(self):
         board = BaseBoard(3)
         board.make_move(1,"x")
