@@ -20,20 +20,19 @@ class MoveGenerator(object):
     def winner(self):
         return self.board.winner()
 
+    def response(self,data):
+        next_move = self.next_move(data["board"])
+        winner = self.winner()
+        return {"move": next_move,
+                "winner": winner}
+
 class Responder(object):
   
-    def __init__(self,transmitter,generator=None):
-        if generator is None:  generator = MoveGenerator()
+    def __init__(self,transmitter,generator):
         self.transmitter = transmitter
         self.generator = generator
 
     def respond(self):
         transmitter_data = self.transmitter.receive()
-        comp_move = self.ai_move(transmitter_data)
-        winner = self.generator.winner()
-        self.transmitter.send(comp_move)
-        self.transmitter.send(winner)
-
-    def ai_move(self, board_state):
-        move_from_generator = self.generator.next_move(board_state)
-        return move_from_generator
+        response = self.generator.response(transmitter_data)
+        self.transmitter.send(response)
