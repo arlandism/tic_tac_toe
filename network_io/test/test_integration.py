@@ -10,12 +10,11 @@ from game.base_board import BaseBoard
 from game.minimax import Minimax
 from server_socket import ServerSocket
 from json_transmitter import JsonTransmitter
-from config_parser import ConfigParser
 from responder import Responder, MoveGenerator
 
 class ResponderIntegrationTests(unittest.TestCase):
 
-      easy_win_possible = {1:"o", 2:"o", 4:"x", 7:"x"}
+      easy_win_possible = {"board":{1:"o", 2:"o", 4:"x", 7:"x"}}
 
       def test_returns_board_with_obvious_move(self):
           transmitter = mock.Mock()
@@ -23,16 +22,7 @@ class ResponderIntegrationTests(unittest.TestCase):
           generator = MoveGenerator()
           responder = Responder(transmitter,generator)
           responder.respond()
-          transmitter.send.assert_any_call(3)
-
-      def test_returns_correct_move_with_buggy_sequence(self):
-          board = {9:"x", 6:"x", 5:"o"}
-          transmitter = mock.Mock()
-          transmitter.receive = mock.MagicMock(return_value=board)
-          generator = MoveGenerator()
-          responder = Responder(transmitter,generator)
-          responder.respond()
-          transmitter.send.assert_any_call(3)
+          transmitter.send.called_with( {"winner":"o","move":3} )
 
 class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 
@@ -47,24 +37,19 @@ class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 class HighLevelResponderTests(unittest.TestCase):
 
       def test_it_hooks_into_socket_sends_and_receives(self):
-          config_file = open("test.yml").read()
-          config_parser = ConfigParser(config_file)
           transmitter = JsonTransmitter(self.connection_socket)
-          minimax = Minimax("o",config_parser.difficulty())
-          generator = MoveGenerator(minimax=minimax)
+          generator = MoveGenerator()
           responder = Responder(transmitter,generator)
 
-          to_send = json.dumps({1:"o",3:"o"})
-          self.sock.send(to_send)
+          game_info = json.dumps( {"board": {1:"o",3:"o"} } )
+          self.sock.send(game_info)
           responder.respond()
-          comp_move = self.sock.recv(1024)
-          winner = self.sock.recv(1024)
-
-          END_MSG_TERM  = "\r\n"
+          data_received = self.sock.recv(1024)
+          game_info = json.loads(data_received)
+           
           WIN_MOVE = 2
-          expected_move = json.dumps(WIN_MOVE) + END_MSG_TERM
-          self.assertEqual(expected_move,comp_move)
-          self.assertEqual(json.dumps("o") + END_MSG_TERM, winner)
+          self.assertEqual(WIN_MOVE, game_info["move"])
+          self.assertEqual("o" ,game_info["winner"])
           
       def setUp(self):
           PORT = random.randint(2000,60000)
