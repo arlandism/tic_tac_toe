@@ -6,33 +6,22 @@ class ResponderTests(unittest.TestCase):
 
     def setUp(self):
         self.transmitter = mock.Mock()
+        self.transmitter.receive = mock.MagicMock(return_value={"board":{}})
         self.generator = mock.Mock()
-
-    def test_responds_got_something(self):
-        self.transmitter.receive = mock.MagicMock()
-        responder = Responder(self.transmitter,mock.Mock())
-        responder.respond()
-        self.assertEqual(1,self.transmitter.receive.call_count)
-
-    def test_respond_sent_something(self):
-        self.transmitter.send = mock.MagicMock()
+ 
+    def test_responder_hands_what_it_got_from_receive_to_generator(self):
+        self.transmitter.receive = mock.MagicMock(return_value="for the generator")
         responder = Responder(self.transmitter,self.generator)
         responder.respond()
-        self.assertEqual(2,self.transmitter.send.call_count)
+        self.generator.response.assert_called_with("for the generator")
 
-    def test_respond_sends_next_move_from_generator(self):
-        self.generator.winner = mock.MagicMock(return_value=None)
-        self.generator.next_move = mock.MagicMock(return_value=3)
-        responder = Responder(self.transmitter,self.generator)
-        responder.respond() 
-        self.transmitter.send.assert_any_call(3)
-         
-    def test_respond_sends_generator_winner(self):
-        self.generator.winner = mock.MagicMock(return_value="x")
-        responder = Responder(self.transmitter, self.generator)
+    def test_responder_sends_what_it_got_from_move_generator(self):
+        generator = MoveGenerator()
+        generator.response = mock.MagicMock(return_value="some stuff")
+        responder = Responder(self.transmitter, generator)
         responder.respond()
-        self.transmitter.send.assert_called_with("x") 
-
+        self.transmitter.send.assert_called_with("some stuff")
+    
 class MoveGeneratorTests(unittest.TestCase):
 
     def test_board_winner_called(self):
