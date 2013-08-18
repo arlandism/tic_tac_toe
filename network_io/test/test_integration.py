@@ -10,7 +10,7 @@ from game.base_board import BaseBoard
 from game.minimax import Minimax
 from server_socket import ServerSocket
 from json_transmitter import JsonTransmitter
-from responder import Responder, MoveGenerator
+from responder import Responder, MoveGenerator, ResponseHandler
 
 class ResponderIntegrationTests(unittest.TestCase):
 
@@ -20,7 +20,8 @@ class ResponderIntegrationTests(unittest.TestCase):
           transmitter = mock.Mock()
           transmitter.receive = mock.MagicMock(return_value=self.easy_win_possible)
           generator = MoveGenerator()
-          responder = Responder(transmitter,generator)
+          handler = ResponseHandler(generator)          
+          responder = Responder(transmitter,handler)
           responder.respond()
           transmitter.send.called_with( {"winner":"o","move":3} )
 
@@ -38,10 +39,12 @@ class HighLevelResponderTests(unittest.TestCase):
 
       def test_it_hooks_into_socket_sends_and_receives(self):
           transmitter = JsonTransmitter(self.connection_socket)
-          generator = MoveGenerator()
-          responder = Responder(transmitter,generator)
+          handler = ResponseHandler(MoveGenerator())
+          responder = Responder(transmitter,handler)
 
-          game_info = json.dumps( {"board": {1:"o",3:"o"} } )
+          game_info = json.dumps( {"board": {1:"o",3:"o"},
+                                   "depth": 20
+                                  } )
           self.sock.send(game_info)
           responder.respond()
           data_received = self.sock.recv(1024)
