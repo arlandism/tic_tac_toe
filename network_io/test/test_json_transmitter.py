@@ -1,7 +1,7 @@
 import unittest
 import json
 import json_transmitter
-from web_io_test_utils import MockSocket
+from network_io_test_utils import MockSocket
 
 EOF = "\r\n"
 
