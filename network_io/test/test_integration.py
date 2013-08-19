@@ -42,11 +42,12 @@ class HighLevelResponderTests(unittest.TestCase):
           handler = ResponseHandler(MoveGenerator())
           responder = Responder(transmitter,handler)
 
-          game_info = json.dumps( {"board": {1:"o",3:"o"},
-                                   "depth": 20
-                                  } )
+          game_info = json.dumps({"board": {1:"o",3:"o"},
+                                  "depth": 20
+                                  })
           self.sock.send(game_info)
           responder.respond()
+
           data_received = self.sock.recv(1024)
           game_info = json.loads(data_received)
            
