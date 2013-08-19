@@ -1,5 +1,22 @@
 import json
 
+class JsonTransmitter(object):
+
+  END_MSG = "\r\n"
+
+  def __init__(self,socket):
+      self.socket = socket
+
+  def send(self,message):
+      message = json.dumps(message) 
+      self.socket.send(message + self.END_MSG) 
+
+  def receive(self):
+      jsonified = self.socket.recv(4096)
+      jsonified = jsonified.replace("\n","")
+      dejsonified = json.loads(jsonified)
+      return HashTransformer.try_dict_key_conversion(dejsonified) 
+
 class HashTransformer(object):
 
       @staticmethod
@@ -29,20 +46,3 @@ class HashTransformer(object):
       def is_terminal(dictionary,key):
           type_key_maps_to = type(dictionary[key])
           return not(type_key_maps_to == dict)
-
-class JsonTransmitter(object):
-
-  END_MSG = "\r\n"
-
-  def __init__(self,socket):
-      self.socket = socket
-
-  def send(self,message):
-      message = json.dumps(message) 
-      self.socket.send(message + self.END_MSG) 
-
-  def receive(self):
-      jsonified = self.socket.recv(4096)
-      jsonified = jsonified.replace("\n","")
-      dejsonified = json.loads(jsonified)
-      return HashTransformer.try_dict_key_conversion(dejsonified) 
