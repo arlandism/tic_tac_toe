@@ -49,6 +49,9 @@ class BaseBoard(object):
     def erase_move(self,move):
         del self.board_state[move]
 
+    def set_state(self,new_state):
+        self.board_state = new_state
+
     def state(self):
         current_state = {}
         for key in self.board_state:

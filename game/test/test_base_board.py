@@ -13,6 +13,12 @@ class BaseBoardTests(unittest.TestCase):
         board.board_state = garbage_state
         self.assertEqual( {5:"o", 6:"x", 9:"x"}, board.state())
 
+    def test_set_state(self):
+        board = BaseBoard(3)
+        self.assertEqual({},board.state())
+        board.set_state({1:"x"})
+        self.assertEqual({1:"x"},board.state())
+
     def test_make_move(self):
         board = BaseBoard(3)
         board.make_move(1,"x")

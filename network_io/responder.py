@@ -42,7 +42,7 @@ class MoveGenerator(object):
 
     def next_move(self,board_state,ai_depth=None):
         ai_depth = self.__error_check(ai_depth)
-        self.board.board_state = board_state
+        self.board.set_state(board_state)
         comp_move = Minimax("o",ai_depth).next_move(self.board)
         self.board.board_state[comp_move] = "o"
         return comp_move
