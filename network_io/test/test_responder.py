@@ -27,11 +27,18 @@ class ResponderTests(unittest.TestCase):
 class ResponseHandlerTests(unittest.TestCase):
     
     def test_response_delegates_to_move_generator(self):
-        data = {"board": {1:"x",2:"x",5:"o"}}
+        data = {"board": {1:"x",2:"x",5:"o"},
+                "depth": 20}
         handler = ResponseHandler(MoveGenerator())
         response = handler.response(data)
         self.assertEqual(3,response["move"])
         self.assertEqual(None,response["winner"])
+
+    def test_handler_defaults_difficulty_if_depth_not_set(self):
+        data = {"board": {1:"x",2:"x",5:"o"}}
+        handler = ResponseHandler(MoveGenerator())
+        response = handler.response(data)
+        self.assertEqual(3,response["move"])
 
 class MoveGeneratorTests(unittest.TestCase):
 
