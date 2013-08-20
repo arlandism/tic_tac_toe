@@ -5,4 +5,5 @@ class TokenInfo(object):
     def other_token(token):
         if token == "x":
             return "o"
-        return "x"
+        else:
+            return "x"
