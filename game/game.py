@@ -29,7 +29,7 @@ class Game(object):
 
     def __introduction__(self):
         intro_string = ("Move by selecting a number.\nNumbers start at 1 and go to %s.\n" +
-                       "Type quit and press Enter or press CTRL+C repeatedly anytime to quit.")
+                        "Type quit and press Enter or press CTRL+C repeatedly anytime to quit.")
         self.prompter.display(intro_string % (self.board.board_index * self.board.board_index))
 
     def __round__(self):
