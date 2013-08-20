@@ -1,9 +1,6 @@
 from base_board import BaseBoard
 from board_generator import BoardStringGenerator
 
-import sys
-sys.path.append("/Users/arlandislawrence/development/python/tic_tac_toe")
-
 from io.prompter import Prompter
 
 class Game(object):
