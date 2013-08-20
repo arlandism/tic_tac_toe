@@ -1,6 +1,6 @@
 import unittest
 
-from game.humanoid import Humanoid
+from players.humanoid import Humanoid
 from game.base_board import BaseBoard
 from test.test_utils import SimpleMockPrompter, FakePrinter, FakeMinimax
 

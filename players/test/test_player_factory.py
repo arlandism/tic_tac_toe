@@ -1,9 +1,11 @@
 import unittest
+import sys
 
-from game.player import HumanPlayer
-from game.ai import ImpossibleAI
-from game.humanoid import Humanoid
-from game.player_factory import PlayerFactory
+sys.path.append("/Users/arlandislawrence/development/python/tic_tac_toe")
+from players.player import HumanPlayer
+from players.ai import ImpossibleAI
+from players.humanoid import Humanoid
+from players.player_factory import PlayerFactory
 from game.base_board import BaseBoard
 from test.test_utils import FakePrinter,SimpleMockPrompter
 

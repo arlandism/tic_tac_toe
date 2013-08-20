@@ -1,5 +1,5 @@
 from game import Game
-from player_factory import PlayerFactory
+from players.player_factory import PlayerFactory
 from base_board import BaseBoard
 from io.prompt_parser import PromptParser
 from io.prompter import Prompter

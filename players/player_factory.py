@@ -1,7 +1,7 @@
 from player import HumanPlayer
 from ai import ImpossibleAI
 from humanoid import Humanoid
-from minimax import Minimax
+from game.minimax import Minimax
 from io.prompter import Prompter
 
 class PlayerFactory(object):

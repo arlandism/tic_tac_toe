@@ -1,4 +1,4 @@
-from game.player import HumanPlayer
+from players.player import HumanPlayer
 
 class MockFactory(object):
 

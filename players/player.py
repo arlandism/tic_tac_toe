@@ -1,6 +1,6 @@
 from io.playerinput import InputValidator
 from io.prompter import Prompter
-from token_info import TokenInfo as ti
+from game.token_info import TokenInfo as ti
 
 class HumanPlayer(object):
 

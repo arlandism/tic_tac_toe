@@ -4,7 +4,7 @@ import mock
 from test.test_utils import FakePrinter
 from game.base_board import BaseBoard
 from game.minimax import Minimax
-from game.ai import ImpossibleAI
+from players.ai import ImpossibleAI
 
 class AINextMoveTests(unittest.TestCase):
 

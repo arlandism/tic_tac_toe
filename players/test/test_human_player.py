@@ -3,7 +3,7 @@ import unittest
 from test.test_utils import FakePrinter,MockUserInput,SimpleMockPrompter
 from game.base_board import BaseBoard
 
-from game.player import HumanPlayer
+from players.player import HumanPlayer
 
 class PlayerInitTests(unittest.TestCase):
 

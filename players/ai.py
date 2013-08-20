@@ -1,4 +1,4 @@
-from minimax import Minimax
+from game.minimax import Minimax
 from io.prompter import Prompter
 
 class ImpossibleAI(object):

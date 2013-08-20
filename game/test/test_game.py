@@ -1,10 +1,14 @@
 import unittest
+
 from game.game import *
 from game.base_board import BaseBoard
-from game.ai import ImpossibleAI
 from game.test.test_utils import MockPlayer
+
 from test.test_utils import FakePrinter,SimpleMockPrompter, MockUserInput
-from game.player import HumanPlayer
+
+from players.ai import ImpossibleAI
+from players.player import HumanPlayer
+
 from io.playerinput import InputValidator
 
 class GameRunTests(unittest.TestCase):
