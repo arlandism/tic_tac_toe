@@ -19,9 +19,9 @@ class Game(object):
         while not self.__over__():
             self.__round__()
         self.prompter.display(self.board)
-        self.__print_winner__()
+        self.__print_winner()
 
-    def __print_winner__(self):
+    def __print_winner(self):
         if self.board.winner():
             self.prompter.display(self.board.winner() + " wins")
         else:
@@ -52,4 +52,3 @@ class Game(object):
     def __alternate_player__(self):
         self.current_player = {self.player_one:self.player_two,
 			                         self.player_two:self.player_one}[self.current_player]
-
