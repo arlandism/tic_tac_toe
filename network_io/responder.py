@@ -41,8 +41,7 @@ class MoveGenerator(object):
         self.board = board
 
     def next_move(self,board_state,ai_depth=None):
-        if ai_depth is None:
-            ai_depth = 20
+        ai_depth = self.__error_check(ai_depth)
         self.board.board_state = board_state
         comp_move = Minimax("o",ai_depth).next_move(self.board)
         self.board.board_state[comp_move] = "o"
@@ -50,3 +49,21 @@ class MoveGenerator(object):
 
     def winner(self):
         return self.board.winner()
+
+    def __error_check(self,value):
+        if value is None:
+            ai_depth = 20
+        else:
+            ai_depth = self.__try_int_conversion_or_throw_exception(value)
+        return ai_depth
+
+    def __try_int_conversion_or_throw_exception(self,value):
+        try: 
+            ai_depth = int(value)
+            return ai_depth
+        except ValueError:
+            raise MustBeInt
+
+class MustBeInt(Exception):
+    
+    pass

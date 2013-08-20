@@ -1,6 +1,6 @@
 import unittest
 import mock
-from responder import Responder, MoveGenerator, ResponseHandler
+from responder import Responder, MoveGenerator, ResponseHandler, MustBeInt
 
 class ResponderTests(unittest.TestCase):
 
@@ -53,11 +53,23 @@ class MoveGeneratorTests(unittest.TestCase):
         self.assertEqual(3, generator.next_move(board_state))
         self.assertEqual(None,generator.winner())
 
+    def test_handler_defaults_with_non_int_difficulties(self):
+        board_state = {1:"x",2:"x",5:"o"}
+        difficulty = "supercalifragilisticexpialidocious"
+        generator = MoveGenerator()
+        self.assertRaises(MustBeInt,generator.next_move,board_state,difficulty)
+
 class IntegrationTests(unittest.TestCase):
 
-    def test_ai_gets_instantiated_with_correct_depth(self):
-        data = {"board":{1:"x", 2:"x"},
-                "depth":1}
+    def test_integration_of_parts(self):
+        DUMB_AI_DEPTH = 1
+        data_from_transmitter_receive = {"board":{1:"x", 2:"x"},
+                                         "depth":DUMB_AI_DEPTH}
+        SMART_MOVE = 3
+        transmitter = mock.Mock()
+        transmitter.receive = mock.MagicMock(return_value=data_from_transmitter_receive)
         handler = ResponseHandler(MoveGenerator())
-        response = handler.response(data)
-        self.assertNotEqual(3, response["move"])
+        responder = Responder(transmitter,handler)
+        responder.respond()
+        self.assertNotEqual(SMART_MOVE, transmitter.send.call_args[0][0]["move"])
+        self.assertEqual(None, transmitter.send.call_args[0][0]["winner"])
