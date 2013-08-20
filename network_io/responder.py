@@ -44,7 +44,7 @@ class MoveGenerator(object):
         ai_depth = self.__error_check(ai_depth)
         self.board.set_state(board_state)
         comp_move = Minimax("o",ai_depth).next_move(self.board)
-        self.board.board_state[comp_move] = "o"
+        self.board.make_move(comp_move,"o")
         return comp_move
 
     def winner(self):
