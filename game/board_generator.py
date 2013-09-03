@@ -20,16 +20,16 @@ class BoardStringGenerator(object):
     def generate_template(self):
         board_template = []
         spaces_per_token = 3
-        dashes = "-" * (spaces_per_token * self.index)
+        equal_signs = "=" * (spaces_per_token * self.index)
         left_side = "%("
         right_side = ")3s"
         for number in self.cells:
           if number % self.index == 0:
-              board_template.append(left_side + str(number) + right_side + "\n" + dashes + "\n")
+              board_template.append(left_side + str(number) + right_side + "\n" + equal_signs + "\n")
           else:
               board_template.append(left_side + str(number) + right_side)
         board_template = "".join(board_template)
-        return board_template.rstrip("\n" + dashes) 
+        return board_template.rstrip("\n" + equal_signs) 
 
     def example_board(self):
         num_keys = (self.index * self.index) + 1

@@ -28,7 +28,7 @@ class SpeechFormatter(object):
 
     @staticmethod
     def format_regular(string):
-        no_dashes = string.replace("-"," ")
+        no_dashes = string.replace("="," ")
         no_single_quotes = no_dashes.replace("'","")
         no_newlines = no_single_quotes.replace("\n"," ")
         no_left_parens = no_newlines.replace("("," ")
@@ -67,7 +67,7 @@ class BoardSpeechFormatter(object):
         return row_list
 
     def trim_board(self,board_string):
-        no_dashes_or_newlines = filter(lambda x: x != "-" and x != "\n",board_string)
+        no_dashes_or_newlines = filter(lambda x: x != "=" and x != "\n",board_string)
         trimmed_whitespace = no_dashes_or_newlines.replace("   "," ")
         trimmed_x = trimmed_whitespace.replace("  x","x")
         trimmed_o = trimmed_x.replace("  o","o")
@@ -81,7 +81,7 @@ class BoardSpeechFormatter(object):
         return "".join(string)
 
     def is_board_string(self,string):
-        min_num_dashes = BoardStringGenerator(3).generate_template().count("-") 
-        if min_num_dashes <= string.count("-"): 
+        min_num_equal_signs = BoardStringGenerator(3).generate_template().count("=") 
+        if min_num_equal_signs <= string.count("="): 
             return True
         return False

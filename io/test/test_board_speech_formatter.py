@@ -98,7 +98,7 @@ class BoardSpeechFormatterTests(unittest.TestCase):
 class SpeechFormatterTests(unittest.TestCase):
  
     def test_it_can_format_regular_strings(self):
-        reg_string = "whatup\n\n---"
+        reg_string = "whatup\n\n==="
         self.assertEqual("whatup",SpeechFormatter.format_regular(reg_string))
         
 

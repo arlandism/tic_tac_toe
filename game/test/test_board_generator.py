@@ -31,10 +31,10 @@ class BoardTemplateGeneratorTests(unittest.TestCase):
     def test_template_with_fours(self):
         row_one = "%(1)3s%(2)3s%(3)3s%(4)3s\n"
         row_two = "\n%(5)3s%(6)3s%(7)3s%(8)3s\n"
-        dashes = "-" * 12
+        equal_signs = "=" * 12
         row_three = "\n%(9)3s%(10)3s%(11)3s%(12)3s\n"
         row_four = "\n%(13)3s%(14)3s%(15)3s%(16)3s"
-        board_template = row_one + dashes +  row_two + dashes +  row_three + dashes + row_four
+        board_template = row_one + equal_signs +  row_two + equal_signs +  row_three + equal_signs + row_four
         generator = BoardStringGenerator(4, {})
         self.assertEqual(board_template,generator.generate_template())
 
@@ -42,14 +42,14 @@ class BoardTemplateGeneratorTests(unittest.TestCase):
         row_one = "%(1)3s%(2)3s%(3)3s\n"
         row_two = "\n%(4)3s%(5)3s%(6)3s\n"
         row_three = "\n%(7)3s%(8)3s%(9)3s"
-        dashes = "-" * 9
-        board_template = row_one + dashes + row_two + dashes + row_three 
+        equal_signs = "=" * 9
+        board_template = row_one + equal_signs + row_two + equal_signs + row_three 
         generator = BoardStringGenerator(3,{})
         self.assertEqual(board_template,generator.generate_template())
 
 class BoardTemplateExampleBoardTests(unittest.TestCase):
    
     def test_example_board_with_threes_board(self):
-        example_board = ("  1  2  3\n---------\n  4  5  6\n---------\n  7  8  9")
+        example_board = ("  1  2  3\n=========\n  4  5  6\n=========\n  7  8  9")
         self.assertEqual(example_board,BoardStringGenerator(3).example_board())
 
