@@ -10,7 +10,9 @@ from game.base_board import BaseBoard
 from game.minimax import Minimax
 from server_socket import ServerSocket
 from json_transmitter import JsonTransmitter
-from responder import Responder, MoveGenerator, ResponseHandler
+from responder import Responder
+from move_generator import MoveGenerator
+from response_handler import ResponseHandler
 
 class ResponderIntegrationTests(unittest.TestCase):
 
@@ -42,18 +44,18 @@ class HighLevelResponderTests(unittest.TestCase):
           handler = ResponseHandler(MoveGenerator())
           responder = Responder(transmitter,handler)
 
-          game_info = json.dumps({"board": {1:"o",3:"o"},
-                                  "depth": 20
-                                  })
+          game_info = json.dumps({ "board": {1:"o",3:"o"},
+                                   "depth": 20 })
           self.sock.send(game_info)
           responder.respond()
 
           data_received = self.sock.recv(1024)
-          game_info = json.loads(data_received)
+          updated_game = json.loads(data_received)
            
           WIN_MOVE = 2
-          self.assertEqual(WIN_MOVE, game_info["move"])
-          self.assertEqual("o" ,game_info["winner"])
+          self.assertEqual(WIN_MOVE, updated_game["move"])
+          self.assertEqual("o" ,updated_game["winner"])
+          self.assertEqual(None, updated_game["winner_on_board"])
           
       def setUp(self):
           PORT = random.randint(2000,60000)
