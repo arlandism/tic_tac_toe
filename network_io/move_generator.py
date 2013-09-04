@@ -1,5 +1,5 @@
-import sys
 import copy
+import sys
 sys.path.append("/Users/arlandislawrence/development/python/tic_tac_toe/")
 from game.base_board import BaseBoard
 from game.minimax import Minimax
@@ -18,7 +18,7 @@ class MoveGenerator(object):
         return comp_move
 
     def winner_of(self,state):
-        board = copy.copy(self.board)
+        board = copy.deepcopy(self.board)
         board.set_state(state)
         return board.winner()
 
