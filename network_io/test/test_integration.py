@@ -25,7 +25,7 @@ class ResponderIntegrationTests(unittest.TestCase):
           handler = ResponseHandler(generator)          
           responder = Responder(transmitter,handler)
           responder.respond()
-          transmitter.send.called_with( {"winner":"o","move":3} )
+          transmitter.send.called_with( {"winner_after_ai_move":"o","ai_move":3} )
 
 class MoveGeneratorBaseBoardIntegrationTests(unittest.TestCase):
 
@@ -53,7 +53,7 @@ class HighLevelResponderTests(unittest.TestCase):
           updated_game = json.loads(data_received)
            
           WIN_MOVE = 2
-          self.assertEqual(WIN_MOVE, updated_game["move"])
+          self.assertEqual(WIN_MOVE, updated_game["ai_move"])
           self.assertEqual("o" ,updated_game["winner_after_ai_move"])
           self.assertEqual(None, updated_game["winner_on_board"])
           

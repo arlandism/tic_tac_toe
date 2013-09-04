@@ -11,7 +11,7 @@ class ResponseHandlerTests(unittest.TestCase):
        generator = mock.Mock()
        generator.next_move = mock.MagicMock(return_value="ai_move")
        response = ResponseHandler(generator).response(data)
-       self.assertEqual("ai_move",response["move"])
+       self.assertEqual("ai_move",response["ai_move"])
 
    def test_handler_returns_winner_after_ai_move_key(self):
        data = {"board":""}
@@ -34,7 +34,7 @@ class IntegrationWithMoveGeneratorTests(unittest.TestCase):
        data = {"board": {1:"o", 2:"o",5:"x"},
                "depth": 20}
        response = ResponseHandler(MoveGenerator()).response(data)
-       self.assertEqual(3,response["move"])
+       self.assertEqual(3,response["ai_move"])
        self.assertEqual("o",response["winner_after_ai_move"])
        self.assertEqual(None,response["winner_on_board"])
 
@@ -42,4 +42,4 @@ class IntegrationWithMoveGeneratorTests(unittest.TestCase):
        data = {"board": {1:"x",2:"x",5:"o"}}
        handler = ResponseHandler(MoveGenerator())
        response = handler.response(data)
-       self.assertEqual(3,response["move"])
+       self.assertEqual(3,response["ai_move"])

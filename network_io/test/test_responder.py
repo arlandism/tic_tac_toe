@@ -38,5 +38,5 @@ class IntegrationTests(unittest.TestCase):
         handler = ResponseHandler(MoveGenerator())
         responder = Responder(transmitter,handler)
         responder.respond()
-        self.assertNotEqual(SMART_MOVE, transmitter.send.call_args[0][0]["move"])
+        self.assertNotEqual(SMART_MOVE, transmitter.send.call_args[0][0]["ai_move"])
         self.assertEqual(None, transmitter.send.call_args[0][0]["winner_after_ai_move"])
