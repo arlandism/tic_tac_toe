@@ -1,6 +1,7 @@
 from server_socket import ServerSocket
 from json_transmitter import JsonTransmitter
-from responder import Responder, MoveGenerator
+from responder import Responder
+from move_generator import MoveGenerator
 from response_handler import ResponseHandler
 
 server = ServerSocket("localhost",5000)
