@@ -1,8 +1,3 @@
-import sys
-sys.path.append("../")
-from game.minimax import Minimax
-from game.base_board import BaseBoard
-
 class Responder(object):
   
     def __init__(self,transmitter,handler):
