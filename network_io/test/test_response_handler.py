@@ -18,7 +18,7 @@ class ResponseHandlerTests(unittest.TestCase):
        generator = mock.Mock()
        generator.winner = mock.MagicMock(return_value="winner!")
        response = ResponseHandler(generator).response(data)
-       self.assertEqual("winner!",response["winner"])
+       self.assertEqual("winner!",response["winner_after_ai_move"])
 
    def test_handler_returns_winner_on_board_key(self):
        data = {"board":"stuff"}
@@ -35,7 +35,7 @@ class IntegrationWithMoveGeneratorTests(unittest.TestCase):
                "depth": 20}
        response = ResponseHandler(MoveGenerator()).response(data)
        self.assertEqual(3,response["move"])
-       self.assertEqual("o",response["winner"])
+       self.assertEqual("o",response["winner_after_ai_move"])
        self.assertEqual(None,response["winner_on_board"])
 
    def test_handler_defaults_difficulty_if_depth_not_set(self):

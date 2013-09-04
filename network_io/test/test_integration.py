@@ -54,7 +54,7 @@ class HighLevelResponderTests(unittest.TestCase):
            
           WIN_MOVE = 2
           self.assertEqual(WIN_MOVE, updated_game["move"])
-          self.assertEqual("o" ,updated_game["winner"])
+          self.assertEqual("o" ,updated_game["winner_after_ai_move"])
           self.assertEqual(None, updated_game["winner_on_board"])
           
       def setUp(self):

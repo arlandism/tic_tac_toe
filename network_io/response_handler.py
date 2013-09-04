@@ -7,7 +7,7 @@ class ResponseHandler(object):
         board_state = data["board"]
         difficulty = self.__try_difficulty_extraction(data)
         response = { "move": self.generator.next_move(board_state,difficulty),
-                     "winner": self.generator.winner(),
+                     "winner_after_ai_move": self.generator.winner(),
                      "winner_on_board": self.generator.winner_of(board_state)
                    }
         return response
