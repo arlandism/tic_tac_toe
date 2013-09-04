@@ -1,3 +1,5 @@
+import copy
+
 from win_generator import WinGenerator
 from board_generator import BoardStringGenerator
 
@@ -50,7 +52,8 @@ class BaseBoard(object):
         del self.board_state[move]
 
     def set_state(self,new_state):
-        self.board_state = new_state
+        state = copy.deepcopy(new_state)
+        self.board_state = state
 
     def state(self):
         current_state = {}

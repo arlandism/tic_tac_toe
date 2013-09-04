@@ -19,6 +19,13 @@ class BaseBoardTests(unittest.TestCase):
         board.set_state({1:"x"})
         self.assertEqual({1:"x"},board.state())
 
+    def test_set_state_doesnt_alter_original_object(self):
+        board = BaseBoard(3)
+        original_state = {"state":"stuff"}
+        board.set_state(original_state)
+        board.make_move(2,"x")
+        self.assertEqual({"state":"stuff"}, original_state)
+
     def test_make_move(self):
         board = BaseBoard(3)
         board.make_move(1,"x")
