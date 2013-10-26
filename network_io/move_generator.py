@@ -1,6 +1,6 @@
 import copy
 import sys
-sys.path.append("/Users/arlandislawrence/development/python/tic_tac_toe/")
+sys.path.append("/Users/arlandislawrence/development/python/tic_tac_toe")
 from game.base_board import BaseBoard
 from game.minimax import Minimax
 
