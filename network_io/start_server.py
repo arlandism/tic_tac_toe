@@ -17,5 +17,6 @@ while True:
       responder = Responder(transmitter, handler)
       ResponseThread(responder).start()
     except KeyboardInterrupt:
-      print "Shutting down server..."
+      print "\nShutting down server..."
+      break
 
