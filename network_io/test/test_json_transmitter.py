@@ -1,6 +1,8 @@
 import unittest
 import json
 import json_transmitter
+import mock
+import socket
 from network_io_test_utils import MockSocket
 
 EOF = "\r\n"
@@ -41,6 +43,10 @@ class JsonTransmitterTests(unittest.TestCase):
         jsonified = json.dumps(decoded)
         self.mock.add_to_receive_stack(jsonified)
         self.assertEqual(decoded,self.transmitter.receive())
+
+    def test_it_sends_shutdown_message(self):
+        self.transmitter.send("foobar")
+        self.assertTrue(self.mock.shutdown_called_with(socket.SHUT_WR))
 
 class HashTransformerTests(unittest.TestCase):
 

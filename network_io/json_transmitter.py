@@ -1,4 +1,5 @@
 import json
+import socket
 
 from hash_transformer import HashTransformer
 
@@ -12,6 +13,7 @@ class JsonTransmitter(object):
   def send(self,message):
       message = json.dumps(message) 
       self.socket.send(message + self.CLRF) 
+      self.socket.shutdown(socket.SHUT_WR)
 
   def receive(self):
       jsonified = self.socket.recv(4096)
